@@ -13,12 +13,10 @@ main().then(() => console.log("Conectado"));
 main().catch((err) => console.log(err));
 
 const seedDB = async (row) => {
-  if (row[8] === "") {
-    row[8] = 0;
-  }
-
-  if (row[9] === "") {
-    row[9] = 0;
+  for (i = 6; i <= 51; i++) {
+    if (row[i] === "") {
+      row[i] = 0;
+    }
   }
 
   const deathsCases = new covidDeaths({
