@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    {{> ./partials/navbar}}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="card mx-3 my-3">
+      <h2 class="card-title pt-4 ps-3">Cumulative Deaths</h2>
+
+      <hr />
+
+      <p class="card-body">
+        Reported deaths are the number of deaths officially reported as due to
+        COVID-19. Total deaths are the estimated number of deaths attributable
+        to COVID-19, including unreported deaths.
+      </p>
+
+      <div class="card mx-3 bg-secondary py-3 text-light text-center fs-5 mb-3">
+        {{ totalDeaths }} reported COVID-19 deaths
+      </div>
+
+      <canvas
+        id="myChart"
+        style="height: 100px; width: 300px"
+        class="mx-5"
+      ></canvas>
+    </div>
+
+    <div class="card mx-3 my-5">
+      <h2 class="card-title pt-4 ps-3">Daily Deaths</h2>
+
+      <hr />
+
+      <p class="card-body">
+        Daily deaths is the best indicator of the progression of the pandemic,
+        although there is generally a 17-21 day lag between infection and
+        deaths.
+      </p>
+
+      <canvas
+        id="myChart2"
+        style="height: 100px; width: 300px"
+        class="mx-5"
+      ></canvas>
+    </div>
+
+    <script src="/javascript/deaths/setup.js"></script>
+    <script src="/javascript/deaths/deaths.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
