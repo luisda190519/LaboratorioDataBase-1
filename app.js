@@ -28,6 +28,10 @@ async function main() {
 main().then(() => console.log("Conectado a base de datos"));
 main().catch((err) => console.log(err));
 
+app.get("/", (req, res) => {
+  res.render("./templates/home");
+});
+
 app.listen(3000, () => {
   console.log("Connected on port 3000");
 });

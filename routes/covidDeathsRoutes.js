@@ -58,6 +58,7 @@ router.route("/filter/:filter").get(async (req, res) => {
     filter.global = false;
   }
   res.render("./templates/deaths", { deaths, totalDeaths, filter });
+  filter.error = false;
 });
 
 router.route("/search").get(async (req, res) => {
@@ -70,7 +71,7 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/deaths/filter/global");
   } else {
-      res.render("./templates/deathsCountry", { deaths, totalDeaths, country });
+    res.render("./templates/deathsCountry", { deaths, totalDeaths, country });
   }
 });
 
