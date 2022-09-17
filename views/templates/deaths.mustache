@@ -18,6 +18,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    {{#filter.error}}
+    {{> ./partials/flash}}
+    {{/filter.error}}
+
     <div class="card mx-3 my-3">
       <h2 class="card-title pt-4 ps-3">Cumulative Deaths</h2>
 
@@ -30,14 +34,30 @@
       </p>
 
       <div class="card mx-3 bg-secondary py-3 text-light text-center fs-5 mb-3">
-        {{ totalDeaths }} reported COVID-19 deaths
+        {{#filter.byCountry}}
+        {{ totalDeaths }} reported COVID-19 deaths by country
+        {{/filter.byCountry}}
+
+        {{#filter.global}}
+        {{ totalDeaths }} global reported COVID-19 deaths
+        {{/filter.global}}
       </div>
 
+      {{#filter.byCountry}}
       <canvas
-        id="myChart"
+        id="myChart1"
         style="height: 100px; width: 300px"
         class="mx-5"
       ></canvas>
+      {{/filter.byCountry}}
+
+      {{#filter.global}}
+      <canvas
+        id="myChart2"
+        style="height: 100px; width: 300px"
+        class="mx-5"
+      ></canvas>
+      {{/filter.global}}
     </div>
 
     <div class="card mx-3 my-5">
@@ -51,11 +71,21 @@
         deaths.
       </p>
 
+      {{#filter.byCountry}}
       <canvas
-        id="myChart2"
+        id="myChart3"
         style="height: 100px; width: 300px"
         class="mx-5"
       ></canvas>
+      {{/filter.byCountry}}
+
+      {{#filter.global}}
+      <canvas
+        id="myChart4"
+        style="height: 100px; width: 300px"
+        class="mx-5"
+      ></canvas>
+      {{/filter.global}}
     </div>
 
     <script src="/javascript/deaths/setup.js"></script>
@@ -65,5 +95,7 @@
       integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
       crossorigin="anonymous"
     ></script>
+
+    {{> ./partials/footer}}
   </body>
 </html>

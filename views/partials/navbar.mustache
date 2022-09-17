@@ -14,9 +14,30 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-          <a class="nav-link" href="/deaths">Deaths</a>
-          <a class="nav-link" href="/new-cases">New cases</a>  
-          <a class="nav-link" href="/vaccination">Vaccination</a>       
+        <a class="nav-link" href="/deaths">Deaths</a>
+        <a class="nav-link" href="/new-cases">New cases</a>
+        <a class="nav-link" href="/vaccination">Vaccination</a>
+        <a class="nav-link" href="/test">Tests</a>
+      </div>
+
+      <div class="ms-auto">
+        <div class="navbar-nav">
+          <a class="nav-link mx-2" href="/deaths/filter/global">Global</a>
+          <a class="nav-link mx-2" href="/deaths/filter/byCountry"
+            >By country</a
+          >
+
+          <form class="d-flex" role="search" action="/deaths/search/" method="get">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search country"
+              aria-label="Search"
+              name="country"
+            />
+            <button class="btn btn-outline-light" type="submit">Search</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
