@@ -68,15 +68,23 @@ const createNewDeathsData = function (data) {
 };
 
 const addDeathsChart = async function (title, data, selectedChart) {
-  config.data.datasets = data;
-  config.options.plugins.title = title;
-  config.data.labels = deathData.labels;
+  try {
+    newConfig = structuredClone(config);
+    newConfig.data.datasets = data;
+    newConfig.options.plugins.title.text = title;
+    newConfig.data.labels = deathData.labels;
 
-  const chart = await new Chart(document.getElementById(selectedChart), config);
+    const chart = await new Chart(
+      document.getElementById(selectedChart),
+      newConfig
+    );
+  } catch (e) {}
 };
 
 const createData = async function () {
-  const result = await fetch("http://localhost:3000/deaths/deathStaticsByCountry");
+  const result = await fetch(
+    "http://localhost:3000/deaths/deathStaticsByCountry"
+  );
   const data = await result.json();
 
   addLabels(data);

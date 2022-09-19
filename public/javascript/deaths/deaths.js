@@ -121,50 +121,62 @@ const createNewDeathsData = function (data) {
   inside.label = "World";
   inside.data = total;
   deathData.newDeathDataSetsGlobal.push(inside);
-
-  inside = new Object();
-
-  inside.borderColor = randomColor();
-  inside.borderWidth = 1;
-  inside.radius = 0;
-  inside.data = countryTotalDeaths;
-  deathData.countryTotalDeathsDataset.push(inside);
+  deathData.countryTotalDeathsDataset = countryTotalDeaths;
 };
 
 const addDeathsChartLine = async function (title, data, selectedChart) {
-  newConfig = structuredClone(lineConfig);
-  newConfig.data.datasets = data;
-  newConfig.options.plugins.title.text = title;
-  newConfig.data.labels = deathData.labels;
+  try {
+    newConfig = structuredClone(lineConfig);
+    newConfig.data.datasets = data;
+    newConfig.options.plugins.title.text = title;
+    newConfig.data.labels = deathData.labels;
 
-  const chart = await new Chart(
-    document.getElementById(selectedChart),
-    newConfig
-  );
+    const chart = await new Chart(
+      document.getElementById(selectedChart),
+      newConfig
+    );
+  } catch (e) {}
 };
 
 const addDeathsChartBar = async function (title, data, selectedChart) {
-  newConfig = structuredClone(barConfig);
-  newConfig.data.datasets = data;
-  newConfig.options.plugins.title.text = title;
-  newConfig.data.labels = deathData.countryLables;
+  try {
+    let inside = new Object();
+    inside.borderColor = randomColor();
+    inside.data = deathData.countryTotalDeathsDataset;
+    inside.backgroundColor = randomColor();
 
-  const chart = await new Chart(
-    document.getElementById(selectedChart),
-    newConfig
-  );
+    newConfig = structuredClone(barConfig);
+    newConfig.data.datasets.push(inside);
+    newConfig.options.plugins.title.text = title;
+    newConfig.data.labels = deathData.countryLables;
+
+    const chart = await new Chart(
+      document.getElementById(selectedChart),
+      newConfig
+    );
+  } catch (e) {}
 };
 
 const addDeathsChartPie = async function (title, data, selectedChart) {
-  newConfig = structuredClone(pieConfig);
-  newConfig.data.datasets = data;
-  newConfig.options.plugins.title.text = title;
-  newConfig.data.labels = deathData.countryLables;
+  try {
+    let inside = new Object();
+    inside.label = "Dataset 1";
+    inside.data = deathData.countryTotalDeathsDataset;
+    inside.backgroundColor = [];
+    deathData.countryLables.forEach((deathCase) => {
+      inside.backgroundColor.push(randomColor());
+    });
 
-  const chart = await new Chart(
-    document.getElementById(selectedChart),
-    newConfig
-  );
+    newConfig = structuredClone(pieConfig);
+    newConfig.data.datasets.push(inside);
+    newConfig.options.plugins.title.text = title;
+    newConfig.data.labels = deathData.countryLables;
+
+    const chart = await new Chart(
+      document.getElementById(selectedChart),
+      newConfig
+    );
+  } catch (e) {}
 };
 
 const createData = async function () {
