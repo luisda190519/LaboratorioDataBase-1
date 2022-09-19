@@ -23,7 +23,7 @@
     {{/filter.error}}
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">Cumulative Deaths</h2>
+      <h2 class="card-title pt-4 ps-3">Cumulative Deaths line chart</h2>
 
       <hr />
 
@@ -61,7 +61,7 @@
     </div>
 
     <div class="card mx-3 my-5">
-      <h2 class="card-title pt-4 ps-3">Daily Deaths</h2>
+      <h2 class="card-title pt-4 ps-3">Daily Deaths line chart</h2>
 
       <hr />
 
@@ -87,6 +87,45 @@
       ></canvas>
       {{/filter.global}}
     </div>
+
+    {{#filter.byCountry}}
+    <div class="card mx-3 my-5">
+      <h2 class="card-title pt-4 ps-3">Total Deaths Bar chart</h2>
+
+      <hr />
+
+      <p class="card-body">
+        Daily deaths is the best indicator of the progression of the pandemic,
+        although there is generally a 17-21 day lag between infection and
+        deaths.
+      </p>
+
+      <canvas
+        id="myChart5"
+        style="height: 100px; width: 300px"
+        class="mx-5"
+      ></canvas>
+    </div>
+
+    <div class="card mx-3 my-5">
+      <h2 class="card-title pt-4 ps-3">Total Deaths Bar chart</h2>
+
+      <hr />
+
+      <p class="card-body">
+        Daily deaths is the best indicator of the progression of the pandemic,
+        although there is generally a 17-21 day lag between infection and
+        deaths.
+      </p>
+
+      <canvas
+        id="myChart6"
+        style="height: 100px; width: 300px"
+        class="mx-5"
+      ></canvas>
+    </div>
+
+    {{/filter.byCountry}}
 
     <script src="/javascript/deaths/setup.js"></script>
     <script src="/javascript/deaths/deaths.js"></script>

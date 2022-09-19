@@ -4,6 +4,8 @@ let deathData = {
   newDeathDataSetsByCountry: [],
   newDeathDataSetsGlobal: [],
   totalDeathsDatasetGlobal: [],
+  countryLables: [],
+  countryTotalDeathsDataset: [],
 };
 
 const randomColor = function () {
@@ -22,6 +24,17 @@ const addLabels = function (data) {
     }
     if (stop) {
       deathData.labels.push(deathCase.date);
+    }
+    lastCountry = deathCase.country;
+  });
+};
+
+const addCountryLabels = function (data) {
+  let labels = [];
+  let lastCountry = data[0].country;
+  data.forEach((deathCase) => {
+    if (!(lastCountry == deathCase.country)) {
+      deathData.countryLables.push(deathCase.country);
     }
     lastCountry = deathCase.country;
   });
@@ -71,6 +84,8 @@ const createNewDeathsData = function (data) {
   let lastCountry = data[0].country;
   let array = [];
   let total = [];
+  let countryTotalDeaths = [];
+  let countryTotal = 0;
   let cont = 0;
 
   data.forEach((deathCase) => {
@@ -81,10 +96,12 @@ const createNewDeathsData = function (data) {
       inside.label = deathCase.country;
       inside.data = array;
       deathData.newDeathDataSetsByCountry.push(inside);
+      countryTotalDeaths.push(countryTotal);
 
       array = [];
       inside = new Object();
       cont = 0;
+      countryTotal = 0;
     }
 
     array.push(deathCase.newDeaths);
@@ -94,6 +111,7 @@ const createNewDeathsData = function (data) {
       total[cont] = 0;
     }
     total[cont] += deathCase.newDeaths;
+    countryTotal += deathCase.newDeaths;
     cont++;
   });
 
@@ -103,41 +121,88 @@ const createNewDeathsData = function (data) {
   inside.label = "World";
   inside.data = total;
   deathData.newDeathDataSetsGlobal.push(inside);
+
+  inside = new Object();
+
+  inside.borderColor = randomColor();
+  inside.borderWidth = 1;
+  inside.radius = 0;
+  inside.data = countryTotalDeaths;
+  deathData.countryTotalDeathsDataset.push(inside);
 };
 
-const addDeathsChart = async function (title, data, selectedChart) {
-  config.data.datasets = data;
-  config.options.plugins.title = title;
-  config.data.labels = deathData.labels;
+const addDeathsChartLine = async function (title, data, selectedChart) {
+  newConfig = structuredClone(lineConfig);
+  newConfig.data.datasets = data;
+  newConfig.options.plugins.title.text = title;
+  newConfig.data.labels = deathData.labels;
 
-  const chart = await new Chart(document.getElementById(selectedChart), config);
+  const chart = await new Chart(
+    document.getElementById(selectedChart),
+    newConfig
+  );
+};
+
+const addDeathsChartBar = async function (title, data, selectedChart) {
+  newConfig = structuredClone(barConfig);
+  newConfig.data.datasets = data;
+  newConfig.options.plugins.title.text = title;
+  newConfig.data.labels = deathData.countryLables;
+
+  const chart = await new Chart(
+    document.getElementById(selectedChart),
+    newConfig
+  );
+};
+
+const addDeathsChartPie = async function (title, data, selectedChart) {
+  newConfig = structuredClone(pieConfig);
+  newConfig.data.datasets = data;
+  newConfig.options.plugins.title.text = title;
+  newConfig.data.labels = deathData.countryLables;
+
+  const chart = await new Chart(
+    document.getElementById(selectedChart),
+    newConfig
+  );
 };
 
 const createData = async function () {
   const result = await fetch("http://localhost:3000/deaths/deathStatics");
   const data = await result.json();
   addLabels(data);
+  addCountryLabels(data);
   createTotalDeathsData(data);
   createNewDeathsData(data);
-  addDeathsChart(
+  addDeathsChartLine(
     "COVID-19 total world deaths by country",
     deathData.totalDeathsDatasetsByCountry,
     "myChart1"
   );
-  addDeathsChart(
+  addDeathsChartLine(
     "COVID-19 total new world deaths by country",
     deathData.newDeathDataSetsByCountry,
     "myChart3"
   );
-  addDeathsChart(
+  addDeathsChartLine(
     "COVID-19 global total world deaths",
     deathData.totalDeathsDatasetGlobal,
     "myChart2"
   );
-  addDeathsChart(
+  addDeathsChartLine(
     "COVID-19 total global new world deaths",
     deathData.newDeathDataSetsGlobal,
     "myChart4"
+  );
+  addDeathsChartBar(
+    "COVID-19 total global new world deaths",
+    deathData.countryTotalDeathsDataset,
+    "myChart5"
+  );
+  addDeathsChartPie(
+    "COVID-19 total global new world deaths",
+    deathData.countryTotalDeathsDataset,
+    "myChart6"
   );
 };
 
