@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const { parse } = require("csv-parse");
 const covidDeaths = require("../models/covidDeaths");
+const covidCases = require("../models/covidCases");
+const covidTests = require("../models/covidTests");
+const CovidVaccinations = require("../models/covidVaccinations");
+const covidVaccinations = require("../models/covidVaccinations");
 
 async function main() {
   await mongoose.connect(
@@ -19,38 +23,76 @@ const seedDB = async (row) => {
     }
   }
 
-  const deathsCases = new covidDeaths({
+  const deaths = new covidDeaths({
     isoCode: row[0],
     continent: row[1],
     country: row[2],
     date: row[3],
     totalDeaths: row[7],
     newDeaths: row[8],
+    population: row[48],
+    medianAge: row[50],
+  });
+
+  const cases = new covidCases({
+    isoCode: row[0],
+    continent: row[1],
+    country: row[2],
+    date: row[3],
     newCases: row[5],
     totalCases: row[4],
+    population: row[48],
+    medianAge: row[50],
+  });
+
+  const tests = new covidTests({
+    isoCode: row[0],
+    continent: row[1],
+    country: row[2],
+    date: row[3],
     totalTest: row[25],
     newTest: row[26],
+    population: row[48],
+    medianAge: row[50],
+  });
+
+  const vaccination = new CovidVaccinations({
+    isoCode: row[0],
+    continent: row[1],
+    country: row[2],
+    date: row[3],
     totalVaccinations: row[34],
     newVaccinations: row[38],
     PeopleVaccinated: row[35],
     population: row[48],
     medianAge: row[50],
   });
-  await deathsCases.save();
+
+  await deaths.save();
+  await cases.save();
+  await tests.save();
+  await vaccination.save();
 };
 
 const deleteAll = async () => {
   await covidDeaths.deleteMany();
+  await covidCases.deleteMany();
+  await covidTests.deleteMany();
+  await covidVaccinations.deleteMany();
 };
 
 fs.createReadStream("./seeds/data-copia.csv")
   .pipe(parse({ delimiter: ",", from_line: 2 }))
   .on("data", async function (row) {
-    seedDB(row);
-    //deleteAll();
+    try {
+      //await deleteAll();
+      await seedDB(row);
+    } catch (e) {
+      console.log(e);
+    }
   })
-  .on("end", function () {
-    console.log("finished");
+  .on("end", async function () {
+    await console.log("finished");
   })
   .on("error", function (error) {
     console.log(error.message);

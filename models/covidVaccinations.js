@@ -13,10 +13,13 @@ const covidSchema = new mongoose.Schema({
   date: {
     type: String,
   },
-  totalDeaths: {
+  totalVaccinations: {
     type: Number,
   },
-  newDeaths: {
+  newVaccinations: {
+    type: Number,
+  },
+  PeopleVaccinated: {
     type: Number,
   },
   population: {
@@ -27,4 +30,4 @@ const covidSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("CovidDeaths", covidSchema);
+module.exports = mongoose.model("CovidVaccinations", covidSchema);

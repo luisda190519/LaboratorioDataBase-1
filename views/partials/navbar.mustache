@@ -14,20 +14,29 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" href="/deaths/filter/global">Deaths</a>
-        <a class="nav-link" href="/new-casesfilter/global">New cases</a>
-        <a class="nav-link" href="/vaccinationfilter/global">Vaccination</a>
-        <a class="nav-link" href="/testfilter/global">Tests</a>
+        {{#filter.global}}
+          <a class="nav-link" href="/deaths/filter/global">Deaths</a>
+          <a class="nav-link" href="/cases/filter/global">Cases</a>
+          <a class="nav-link" href="/vaccinations/filter/global">Vaccination</a>
+          <a class="nav-link" href="/tests/filter/global">Tests</a>
+        {{/filter.global}}
+
+        {{#filter.byCountry}}
+          <a class="nav-link" href="/deaths/filter/byCountry">Deaths</a>
+          <a class="nav-link" href="/cases/filter/byCountry">Cases</a>
+          <a class="nav-link" href="/vaccinations/filter/byCountry">Vaccination</a>
+          <a class="nav-link" href="/tests/filter/byCountry">Tests</a>
+        {{/filter.byCountry}}
       </div>
 
       <div class="ms-auto">
         <div class="navbar-nav">
-          <a class="nav-link mx-2" href="/deaths/filter/global">Global</a>
-          <a class="nav-link mx-2" href="/deaths/filter/byCountry"
+          <a class="nav-link mx-2" href="/{{filter.label}}/filter/global">Global</a>
+          <a class="nav-link mx-2" href="/{{filter.label}}/filter/byCountry"
             >By country</a
           >
 
-          <form class="d-flex" role="search" action="/deaths/search/" method="get">
+          <form class="d-flex" role="search" action="/{{filter.label}}/search/" method="get">
             <input
               class="form-control me-2"
               type="search"

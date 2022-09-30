@@ -7,6 +7,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const covidDeaths = require("./models/covidDeaths");
 const deathsRoute = require("./routes/covidDeathsRoutes");
+const casesRoute = require("./routes/covidCasesRoutes");
+const testsRoute = require("./routes/covidTestsRoutes");
+const vaccinationsRoute = require("./routes/covidVaccinationsRoutes");
 const app = express();
 
 app.engine("mustache", mustacheExpress());
@@ -14,6 +17,10 @@ app.set("view engine", "mustache");
 app.set("views", "./views");
 
 app.use("/deaths", deathsRoute);
+app.use("/tests", testsRoute);
+app.use("/cases", casesRoute);
+app.use("/vaccinations", vaccinationsRoute);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -31,6 +38,7 @@ main().catch((err) => console.log(err));
 app.get("/", (req, res) => {
   res.render("./templates/home");
 });
+
 
 app.listen(3000, () => {
   console.log("Connected on port 3000");

@@ -1,4 +1,4 @@
-const config = {
+const lineConfig = {
   type: "line",
   data: {
     labels: [],

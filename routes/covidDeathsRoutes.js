@@ -3,7 +3,12 @@ const mongoose = require("mongoose");
 const covidDeaths = require("../models/covidDeaths");
 const router = express.Router();
 
-const filter = { global: false, byCountry: false, error: false };
+const filter = {
+  global: false,
+  byCountry: false,
+  error: false,
+  label: "deaths",
+};
 let location = "";
 
 const searchDeathCases = async function () {
@@ -21,7 +26,7 @@ const searchDeathCasesByCountry = async function (country) {
 const GetTotalDeaths = function (deaths) {
   let total = 0;
   deaths.forEach((deathCase) => {
-    total += deathCase.totalDeaths;
+    total += deathCase.newDeaths;
   });
   return total;
 };
@@ -30,7 +35,7 @@ const GetTotalDeathsByCountry = function (deaths, country) {
   let total = 0;
   deaths.forEach((deathCase) => {
     if (deathCase.country === country) {
-      total += deathCase.totalDeaths;
+      total += deathCase.newDeaths;
     }
   });
   return total;
@@ -71,7 +76,12 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/deaths/filter/global");
   } else {
-    res.render("./templates/deathsCountry", { deaths, totalDeaths, country });
+    res.render("./templates/deathsCountry", {
+      deaths,
+      totalDeaths,
+      country,
+      filter,
+    });
   }
 });
 
@@ -83,6 +93,10 @@ router.get("/deathStatics", async (req, res) => {
 router.get("/deathStaticsByCountry", async (req, res) => {
   const deaths = await searchDeathCasesByCountry(location);
   res.json(deaths);
+});
+
+router.get("/filter", async (req, res) => {
+  res.json(filter);
 });
 
 module.exports = router;
