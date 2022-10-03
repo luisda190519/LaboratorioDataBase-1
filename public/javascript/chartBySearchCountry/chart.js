@@ -93,7 +93,6 @@ const addDeathsChartLine = async function (title, data2, selectedChart) {
   }
 };
 
-
 const createData = async function (url, global, daily, type, IdStart) {
   const result = await fetch(url);
   const dataFetched = await result.json();
@@ -143,7 +142,21 @@ const start = async function () {
       "casesChart"
     );
   } else if (dataFetched.label === "tests") {
+    await createData(
+      "http://localhost:3000/cases/testsStaticsByCountry",
+      "totalTest",
+      "newTest",
+      "tests",
+      "testsChart"
+    );
   } else if (dataFetched.label === "vaccinations") {
+    await createData(
+      "http://localhost:3000/cases/vaccinationsStaticsByCountry",
+      "totalVaccinations",
+      "newVaccinations",
+      "vaccinations",
+      "casesChart"
+    );
   }
 };
 

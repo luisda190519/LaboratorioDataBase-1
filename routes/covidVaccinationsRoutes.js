@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const covidVaccinations = require("../models/covidVaccinations");
 const router = express.Router();
+let location = "";
 
 const filter = {
   global: false,
@@ -9,7 +10,6 @@ const filter = {
   error: false,
   label: "vaccinations",
 };
-let location = "";
 
 const searchVaccinations = async function () {
   const vaccinations = await covidVaccinations

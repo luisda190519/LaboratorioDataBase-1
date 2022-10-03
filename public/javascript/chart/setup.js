@@ -1,3 +1,4 @@
+//Configurancion para todos los tipos de chart de la pagina
 const lineConfig = {
   type: "line",
   data: {
@@ -60,7 +61,7 @@ const pieConfig = {
     responsive: true,
     plugins: {
       legend: {
-        position: "top"
+        position: "top",
       },
       title: {
         display: true,

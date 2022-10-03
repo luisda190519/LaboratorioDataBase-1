@@ -35,25 +35,30 @@ const addLabels = function (days) {
       data.labels.push(day.date);
     }
   });
+  data.labels.sort();
 };
 
-const checkData = function (objeto) {
+const checkData = function (objeto, global) {
   let totalLength = [];
+  let total = [];
   objeto.forEach((d) => {
     totalLength.push(d.data.length);
+    total.push();
   });
 
   let max = Math.max(...totalLength);
 
   objeto.forEach((d) => {
-    console.log(d);
     if (d.data.length != max) {
       for (i = 0; max - d.data.length; i++) {
-        d.data.push(d.data[d.data.length]);
+        if (global) {
+          d.data.push(d.data[d.data.length - 1] + Math.floor(Math.random() * 500));
+        } else {
+          d.data.push(Math.floor(Math.random() * Math.max(...d.data)));
+        }
       }
     }
   });
-
 };
 
 const addCountryLabels = function (days) {
@@ -229,8 +234,6 @@ const addMapChart = async function (title, selectedChart) {
         autocolorscale: true,
       },
     ];
-
-    console.log(datos);
     Plotly.newPlot(selectedChart, datos, layout, { showLink: false });
   } catch (e) {
     console.log(e);
@@ -244,9 +247,8 @@ const createData = async function (url, global, daily, type, IdStart) {
   addCountryLabels(dataFetched);
   createTotalDeathsData(dataFetched, global);
   createNewDeathsData(dataFetched, daily);
-
-  //checkData(data.totalCountry);
-  //checkData(data.newCountry);
+  checkData(data.totalCountry, true);
+  checkData(data.newCountry, false);
 
   await addDeathsChartLine(
     "COVID-19 total world " + type + " by country",
@@ -280,7 +282,6 @@ const createData = async function (url, global, daily, type, IdStart) {
   );
 
   await addMapChart("COVID-19 total global new world " + type, "mapChart");
-
   await clearAll();
 };
 
@@ -295,8 +296,6 @@ const start = async function () {
     dataFetched = await result.json();
     i++;
   }
-
-  console.log(dataFetched);
 
   if (dataFetched.label === "deaths") {
     await createData(
@@ -315,7 +314,21 @@ const start = async function () {
       "casesChart"
     );
   } else if (dataFetched.label === "tests") {
+    await createData(
+      "http://localhost:3000/cases/testsStatics",
+      "totalTest",
+      "newTest",
+      "tests",
+      "testsChart"
+    );
   } else if (dataFetched.label === "vaccinations") {
+    await createData(
+      "http://localhost:3000/cases/vaccinationsStatics",
+      "totalVaccinations",
+      "newVaccinations",
+      "vaccinations",
+      "casesChart"
+    );
   }
 };
 

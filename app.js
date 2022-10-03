@@ -1,3 +1,4 @@
+//Libreries and extension usadas
 const express = require("express");
 const mustacheExpress = require("mustache-express");
 const mongoose = require("mongoose");
@@ -5,39 +6,39 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const covidDeaths = require("./models/covidDeaths");
 const deathsRoute = require("./routes/covidDeathsRoutes");
 const casesRoute = require("./routes/covidCasesRoutes");
 const testsRoute = require("./routes/covidTestsRoutes");
+const general = require('./routes/general');
 const vaccinationsRoute = require("./routes/covidVaccinationsRoutes");
 const app = express();
 
+//Añadiendo el motor de templates para html, el cual es mustache
 app.engine("mustache", mustacheExpress());
 app.set("view engine", "mustache");
 app.set("views", "./views");
 
+//Rutas de la pagina
+app.use("/", general);
 app.use("/deaths", deathsRoute);
 app.use("/tests", testsRoute);
 app.use("/cases", casesRoute);
 app.use("/vaccinations", vaccinationsRoute);
 
+//Configuracion de la app web
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
+//Coneccion con la mongodb, la base de datos seleccionada
 async function main() {
   await mongoose.connect(
     "mongodb://localhost:27017/laboratorio_bases_de_datos_test"
   );
 }
-
 main().then(() => console.log("Conectado a base de datos"));
 main().catch((err) => console.log(err));
-
-app.get("/", (req, res) => {
-  res.render("./templates/home");
-});
 
 
 app.listen(3000, () => {

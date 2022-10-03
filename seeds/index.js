@@ -7,15 +7,20 @@ const covidTests = require("../models/covidTests");
 const CovidVaccinations = require("../models/covidVaccinations");
 const covidVaccinations = require("../models/covidVaccinations");
 
+//Coneccion a la base de datos
 async function main() {
   await mongoose.connect(
     "mongodb://localhost:27017/laboratorio_bases_de_datos_test"
   );
 }
+main().then(() => {
+  console.log("Conectado");
+  deleteAll();
+});
 
-main().then(() => console.log("Conectado"));
 main().catch((err) => console.log(err));
 
+//Llenamos la base de datos con los datos del informe de covid 19
 const seedDB = async (row) => {
   for (i = 6; i <= 51; i++) {
     if (row[i] === "") {
@@ -81,11 +86,11 @@ const deleteAll = async () => {
   await covidVaccinations.deleteMany();
 };
 
+//Lectura del archivo donde se encuentra todos los datos a utilizar
 fs.createReadStream("./seeds/data-copia.csv")
   .pipe(parse({ delimiter: ",", from_line: 2 }))
   .on("data", async function (row) {
     try {
-      //await deleteAll();
       await seedDB(row);
     } catch (e) {
       console.log(e);
