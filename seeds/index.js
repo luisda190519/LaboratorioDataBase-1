@@ -28,6 +28,10 @@ const seedDB = async (row) => {
     }
   }
 
+  if (row[1] === "") {
+    row[1] = "Continent";
+  }
+
   const deaths = new covidDeaths({
     isoCode: row[0],
     continent: row[1],

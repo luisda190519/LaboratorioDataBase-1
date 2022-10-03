@@ -27,6 +27,13 @@
           <a class="nav-link" href="/vaccinations/filter/byCountry">Vaccination</a>
           <a class="nav-link" href="/tests/filter/byCountry">Tests</a>
         {{/filter.byCountry}}
+
+        {{#filter.byContinent}}
+          <a class="nav-link" href="/deaths/filter/bycontinent">Deaths</a>
+          <a class="nav-link" href="/cases/filter/byContinent">Cases</a>
+          <a class="nav-link" href="/vaccinations/filter/byContinent">Vaccination</a>
+          <a class="nav-link" href="/tests/filter/byContinent">Tests</a>
+        {{/filter.byContinent}}
       </div>
 
       <div class="ms-auto">
@@ -34,6 +41,9 @@
           <a class="nav-link mx-2" href="/{{filter.label}}/filter/global">Global</a>
           <a class="nav-link mx-2" href="/{{filter.label}}/filter/byCountry"
             >By country</a
+          >
+          <a class="nav-link mx-2" href="/{{filter.label}}/filter/byContinent"
+            >By continent</a
           >
 
           <form class="d-flex" role="search" action="/{{filter.label}}/search/" method="get">

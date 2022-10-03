@@ -24,17 +24,17 @@
       <hr />
 
       <p class="card-body">
-        Reported deaths are the number of deaths officially reported as due to
+        Reported {{filter.label}} are the number of deaths officially reported as due to
         COVID-19. Total deaths are the estimated number of deaths attributable
         to COVID-19, including unreported deaths.
       </p>
 
       <div class="card mx-3 bg-secondary py-3 text-light text-center fs-5 mb-3">
-        {{ totalCases }} reported COVID-19 cases in {{country}}
+        {{ total }} reported COVID-19 {{filter.label}} in {{country}}
       </div>
 
       <canvas
-        id="casesChart1"
+        id="chart1"
         style="height: 100px; width: 300px"
         class="mx-5"
       ></canvas>
@@ -46,12 +46,12 @@
       <hr />
 
       <p class="card-body">
-        Daily deaths is the best indicator of the progression of the pandemic,
+        Daily {{filter.label}} is the best indicator of the progression of the pandemic,
         although there is generally a 17-21 day lag between infection and
         deaths.
       </p>
       <canvas
-        id="casesChart2"
+        id="chart2"
         style="height: 100px; width: 300px"
         class="mx-5"
       ></canvas>

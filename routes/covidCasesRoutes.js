@@ -6,6 +6,7 @@ const router = express.Router();
 const filter = {
   global: false,
   byCountry: false,
+  byContinent:false,
   error: false,
   label: "cases",
 };
@@ -54,17 +55,23 @@ const commafy = function commafy(num) {
 
 router.route("/filter/:filter").get(async (req, res) => {
   const cases = await searchCases();
-  const totalCases = GetTotalCases(cases);
+  const totalCases = commafy(GetTotalCases(cases));
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
+    filter.byContinent = false;
   } else if (req.params.filter === "byCountry") {
     filter.byCountry = true;
     filter.global = false;
+    filter.byContinent = false;
+  }else{
+    filter.byCountry = false;
+    filter.global = false;
+    filter.byContinent = true;
   }
   res.render("./templates/cases", {
     cases: cases,
-    totalCases: totalCases,
+    total: totalCases,
     filter,
   });
   filter.error = false;
@@ -74,15 +81,15 @@ router.route("/search").get(async (req, res) => {
   let { country } = req.query;
   const cases = await searchCasesByCountry(country);
   location = country;
-  const totalCases = GetTotalCasesByCountry(cases, country);
+  const totalCases = commafy(GetTotalCasesByCountry(cases, country));
 
   if (totalCases == 0) {
     filter.error = true;
     res.redirect("/cases/filter/global");
   } else {
-    res.render("./templates/casesCountry", {
+    res.render("./templates/search", {
       cases: cases,
-      totalCases: totalCases,
+      total: totalCases,
       country,
       filter
     });

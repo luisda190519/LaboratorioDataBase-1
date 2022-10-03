@@ -6,6 +6,7 @@ const router = express.Router();
 const filter = {
   global: false,
   byCountry: false,
+  byContinent: false,
   error: false,
   label: "tests",
 };
@@ -58,13 +59,19 @@ router.route("/filter/:filter").get(async (req, res) => {
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
+    filter.byContinent = false;
   } else if (req.params.filter === "byCountry") {
     filter.byCountry = true;
     filter.global = false;
+    filter.byContinent = false;
+  } else {
+    filter.byCountry = false;
+    filter.global = false;
+    filter.byContinent = true;
   }
   res.render("./templates/tests", {
     tests: tests,
-    totalTests: totalTests,
+    total: totalTests,
     filter,
   });
   filter.error = false;
@@ -80,11 +87,11 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/tests/filter/global");
   } else {
-    res.render("./templates/testsCountry", {
+    res.render("./templates/search", {
       tests: tests,
-      totalTests: totalTests,
+      total: totalTests,
       country,
-      filter
+      filter,
     });
   }
 });

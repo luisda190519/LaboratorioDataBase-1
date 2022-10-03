@@ -93,7 +93,7 @@ const addDeathsChartLine = async function (title, data2, selectedChart) {
   }
 };
 
-const createData = async function (url, global, daily, type, IdStart) {
+const createData = async function (url, global, daily, type) {
   const result = await fetch(url);
   const dataFetched = await result.json();
   addLabels(dataFetched);
@@ -102,12 +102,12 @@ const createData = async function (url, global, daily, type, IdStart) {
   await addDeathsChartLine(
     "COVID-19 total world " + type + " by country",
     data.total,
-    IdStart + "1"
+    "chart1"
   );
   await addDeathsChartLine(
     "COVID-19 global total world " + type,
     data.new,
-    IdStart + "2"
+    "chart2"
   );
 
   await clearAll();
@@ -119,7 +119,7 @@ const start = async function () {
   const array = ["cases", "tests", "vaccinations"];
   let i = 0;
 
-  while (!dataFetched.global && !dataFetched.byCountry) {
+  while (!dataFetched.global && !dataFetched.byCountry  && !dataFetched.byContinent) {
     result = await fetch("http://localhost:3000/" + array[i] + "/filter");
     dataFetched = await result.json();
     i++;
@@ -130,32 +130,28 @@ const start = async function () {
       "http://localhost:3000/deaths/deathStaticsByCountry",
       "totalDeaths",
       "newDeaths",
-      "deaths",
-      "deathsChart"
+      "deaths"
     );
   } else if (dataFetched.label === "cases") {
     await createData(
       "http://localhost:3000/cases/casesStaticsByCountry",
       "totalCases",
       "newCases",
-      "cases",
-      "casesChart"
+      "cases"
     );
   } else if (dataFetched.label === "tests") {
     await createData(
       "http://localhost:3000/cases/testsStaticsByCountry",
       "totalTest",
       "newTest",
-      "tests",
-      "testsChart"
+      "tests"
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
       "http://localhost:3000/cases/vaccinationsStaticsByCountry",
       "totalVaccinations",
       "newVaccinations",
-      "vaccinations",
-      "casesChart"
+      "vaccinations"
     );
   }
 };

@@ -7,6 +7,7 @@ let location = "";
 const filter = {
   global: false,
   byCountry: false,
+  byContinent: false,
   error: false,
   label: "vaccinations",
 };
@@ -60,13 +61,19 @@ router.route("/filter/:filter").get(async (req, res) => {
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
+    filter.byContinent = false;
   } else if (req.params.filter === "byCountry") {
     filter.byCountry = true;
     filter.global = false;
+    filter.byContinent = false;
+  } else {
+    filter.byCountry = false;
+    filter.global = false;
+    filter.byContinent = true;
   }
   res.render("./templates/vaccinations", {
     vaccinations: vaccinations,
-    totalVaccinations: totalVaccinations,
+    total: totalVaccinations,
     filter,
   });
   filter.error = false;
@@ -84,11 +91,11 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/vaccinations/filter/global");
   } else {
-    res.render("./templates/vaccinationCountry", {
+    res.render("./templates/search", {
       vaccinations: vaccinations,
-      totalVaccinations: totalVaccinations,
+      total: totalVaccinations,
       country,
-      filter
+      filter,
     });
   }
 });
