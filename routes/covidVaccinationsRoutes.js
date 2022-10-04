@@ -91,6 +91,9 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/vaccinations/filter/global");
   } else {
+    filter.byCountry = true;
+    filter.global = false;
+    filter.byContinent = false;
     res.render("./templates/search", {
       vaccinations: vaccinations,
       total: totalVaccinations,
@@ -110,4 +113,5 @@ router.get("/vaccinationsStaticsByCountry", async (req, res) => {
   res.json(vaccinations);
 });
 
-module.exports = router;
+exports.filter = filter;
+exports.router = router;

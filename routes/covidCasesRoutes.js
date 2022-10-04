@@ -87,6 +87,9 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/cases/filter/global");
   } else {
+    filter.byCountry = true;
+    filter.global = false;
+    filter.byContinent = false;
     res.render("./templates/search", {
       cases: cases,
       total: totalCases,
@@ -110,4 +113,5 @@ router.get("/filter", async (req, res) => {
   res.json(filter);
 });
 
-module.exports = router;
+exports.filter = filter;
+exports.router = router;

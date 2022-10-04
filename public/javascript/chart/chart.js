@@ -334,22 +334,8 @@ const createData = async function (url, global, daily, type) {
 };
 
 const start = async function () {
-  let result = await fetch("http://localhost:3000/deaths/filter");
-  let dataFetched = await result.json();
-  const array = ["deaths", "cases", "tests", "vaccinations"];
-  let i = 0;
-
-  while (
-    !dataFetched.global &&
-    !dataFetched.byCountry &&
-    !dataFetched.byContinent
-  ) {
-    result = await fetch("http://localhost:3000/" + array[i] + "/filter");
-    dataFetched = await result.json();
-    i++;
-  }
-
-  console.log(dataFetched);
+  result = await fetch("http://localhost:3000/filter");
+  dataFetched = await result.json();
 
   if (dataFetched.label === "deaths") {
     await createData(
@@ -367,14 +353,14 @@ const start = async function () {
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "http://localhost:3000/cases/testsStatics",
+      "http://localhost:3000/tests/testStatics",
       "totalTest",
       "newTest",
       "tests"
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "http://localhost:3000/cases/vaccinationsStatics",
+      "http://localhost:3000/vaccinations/vaccinationsStatics",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations"

@@ -69,7 +69,7 @@ router.route("/filter/:filter").get(async (req, res) => {
     filter.global = false;
     filter.byContinent = true;
   }
-  res.render("./templates/deaths", { deaths, total:totalDeaths, filter });
+  res.render("./templates/deaths", { deaths, total: totalDeaths, filter });
   filter.error = false;
 });
 
@@ -83,9 +83,12 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/deaths/filter/global");
   } else {
+    filter.byCountry = true;
+    filter.global = false;
+    filter.byContinent = false;
     res.render("./templates/search", {
       deaths,
-      total:totalDeaths,
+      total: totalDeaths,
       country,
       filter,
     });
@@ -102,8 +105,10 @@ router.get("/deathStaticsByCountry", async (req, res) => {
   res.json(deaths);
 });
 
-router.get("/filter", async (req, res) => {
+router.get("/filter", (req, res) => {
   res.json(filter);
 });
 
-module.exports = router;
+exports.filter = filter;
+exports.router = router;
+

@@ -6,11 +6,11 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const deathsRoute = require("./routes/covidDeathsRoutes");
-const casesRoute = require("./routes/covidCasesRoutes");
-const testsRoute = require("./routes/covidTestsRoutes");
-const general = require('./routes/general');
-const vaccinationsRoute = require("./routes/covidVaccinationsRoutes");
+const { router: deathsRoute } = require("./routes/covidDeathsRoutes");
+const { router: casesRoute } = require("./routes/covidCasesRoutes");
+const { router: testsRoute } = require("./routes/covidTestsRoutes");
+const {router: vaccinationsRoute,} = require("./routes/covidVaccinationsRoutes");
+const general = require("./routes/general");
 const app = express();
 
 //Añadiendo el motor de templates para html, el cual es mustache
@@ -39,7 +39,6 @@ async function main() {
 }
 main().then(() => console.log("Conectado a base de datos"));
 main().catch((err) => console.log(err));
-
 
 app.listen(3000, () => {
   console.log("Connected on port 3000");

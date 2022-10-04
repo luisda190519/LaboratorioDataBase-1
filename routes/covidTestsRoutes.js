@@ -87,6 +87,9 @@ router.route("/search").get(async (req, res) => {
     filter.error = true;
     res.redirect("/tests/filter/global");
   } else {
+    filter.byCountry = true;
+    filter.global = false;
+    filter.byContinent = false;
     res.render("./templates/search", {
       tests: tests,
       total: totalTests,
@@ -106,4 +109,5 @@ router.get("/testsStaticsByCountry", async (req, res) => {
   res.json(tests);
 });
 
-module.exports = router;
+exports.filter = filter;
+exports.router = router;
