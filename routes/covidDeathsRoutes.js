@@ -69,7 +69,7 @@ router.route("/filter/:filter").get(async (req, res) => {
     filter.global = false;
     filter.byContinent = true;
   }
-  res.render("./templates/deaths", { deaths, total: totalDeaths, filter });
+  res.render("./templates/show", { deaths, total: totalDeaths, filter });
   filter.error = false;
 });
 

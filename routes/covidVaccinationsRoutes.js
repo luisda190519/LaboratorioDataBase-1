@@ -71,7 +71,7 @@ router.route("/filter/:filter").get(async (req, res) => {
     filter.global = false;
     filter.byContinent = true;
   }
-  res.render("./templates/vaccinations", {
+  res.render("./templates/show", {
     vaccinations: vaccinations,
     total: totalVaccinations,
     filter,

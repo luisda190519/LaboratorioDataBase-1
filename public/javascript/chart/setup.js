@@ -6,19 +6,15 @@ const lineConfig = {
     datasets: [],
   },
   options: {
-    interaction: {
-      intersect: false,
-    },
+    responsive: true,
     plugins: {
-      legend: false,
+      legend: {
+        display: false,
+        position: "top",
+      },
       title: {
         display: true,
         text: "",
-      },
-    },
-    scales: {
-      y: {
-        stacked: true,
       },
     },
   },
@@ -61,6 +57,7 @@ const pieConfig = {
     responsive: true,
     plugins: {
       legend: {
+        display: false,
         position: "top",
       },
       title: {

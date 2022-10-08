@@ -65,33 +65,7 @@ const addContinentLabels = function (days) {
   });
 };
 
-const checkByCountryData = function (objeto, global) {
-  let totalLength = [];
-  let total = [];
-  objeto.forEach((d) => {
-    totalLength.push(d.data.length);
-    total.push();
-  });
-
-  let max = Math.max(...totalLength);
-
-  objeto.forEach((d) => {
-    const average = d.data.reduce((a, b) => a + b, 0) / d.data.length;
-    if (d.data.length != max && !(d.continent === "Continent")) {
-      for (i = 0; max - d.data.length; i++) {
-        if (global) {
-          d.data.push(
-            d.data[d.data.length - 1] + Math.floor(Math.random() * 500)
-          );
-        } else {
-          d.data.push(Math.floor(Math.random() * average));
-        }
-      }
-    }
-  });
-};
-
-const createTotalDeathsData = function (days, global) {
+const createTotalData = function (days, global) {
   let inside = new Object();
   let lastCountry = days[0].country;
   let array = [];
@@ -102,7 +76,7 @@ const createTotalDeathsData = function (days, global) {
     if (!(day.continent === "Continent")) {
       if (!(lastCountry == day.country)) {
         inside.borderColor = randomColor();
-        inside.borderWidth = 1;
+        inside.borderWidth = 2;
         inside.radius = 0;
         inside.label = lastCountry;
         inside.data = array;
@@ -124,7 +98,7 @@ const createTotalDeathsData = function (days, global) {
     lastCountry = day.country;
   });
   inside.borderColor = randomColor();
-  inside.borderWidth = 1;
+  inside.borderWidth = 3;
   inside.radius = 0;
   inside.label = "World";
   inside.data = total.sort(function (a, b) {
@@ -134,7 +108,7 @@ const createTotalDeathsData = function (days, global) {
   data.totalDataset.push(inside);
 };
 
-const createNewDeathsData = function (days, daily) {
+const createDailyData = function (days, daily) {
   let inside = new Object();
   let last = days[0];
   let array = [];
@@ -157,7 +131,7 @@ const createNewDeathsData = function (days, daily) {
       }
       if (!(last.country == day.country)) {
         inside.borderColor = randomColor();
-        inside.borderWidth = 1;
+        inside.borderWidth = 2;
         inside.radius = 0;
         inside.label = last.country;
         inside.data = array;
@@ -183,7 +157,7 @@ const createNewDeathsData = function (days, daily) {
   });
 
   inside.borderColor = randomColor();
-  inside.borderWidth = 1;
+  inside.borderWidth = 3;
   inside.radius = 0;
   inside.label = "World";
   inside.data = total;
@@ -197,6 +171,8 @@ const addDeathsChartLine = async function (title, data2, selectedChart) {
     newConfig.data.datasets = data2;
     newConfig.options.plugins.title.text = title;
     newConfig.data.labels = data.labels;
+
+    console.log(data2);
 
     const chart = await new Chart(
       document.getElementById(selectedChart),
@@ -277,12 +253,8 @@ const createData = async function (url, global, daily, type) {
   addLabels(dataFetched);
   addCountryLabels(dataFetched);
   addContinentLabels(dataFetched);
-  createTotalDeathsData(dataFetched, global);
-  createNewDeathsData(dataFetched, daily);
-  //checkByCountryData(data.totalCountry, true);
-  //checkByCountryData(data.newCountry, false);
-  //checkByCountryData(data.totalDataset, true);
-  //checkByCountryData(data.newGlobal, false);
+  createTotalData(dataFetched, global);
+  createDailyData(dataFetched, daily);
 
   await addDeathsChartLine(
     "COVID-19 global total world " + type,
@@ -300,7 +272,7 @@ const createData = async function (url, global, daily, type) {
     "chart3"
   );
   await addDeathsChartLine(
-    "COVID-19 total new world " + type + "by country",
+    "COVID-19 total new world " + type + " by country",
     data.newCountry,
     "chart4"
   );
