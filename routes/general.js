@@ -7,12 +7,12 @@ router.get("/", (req, res) => {
 });
 
 router.get("/filter", (req, res) => {
-  const array = ["Deaths", "Cases", "Tests", "Vaccinations"];
+  const array = ["deaths", "cases", "tests", "vaccinations"];
   let i = 0;
   let filer = null;
 
   do {
-    filter = require("./covid" + array[i] + "Routes");
+    filter = require("./" + array[i] + "Routes");
     i++;
   } while (!filter.filter.global && !filter.filter.byCountry && !filter.filter.byContinent && i<=3);
   res.json(filter.filter);

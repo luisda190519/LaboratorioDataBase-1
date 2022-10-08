@@ -6,10 +6,10 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { router: deathsRoute } = require("./routes/covidDeathsRoutes");
-const { router: casesRoute } = require("./routes/covidCasesRoutes");
-const { router: testsRoute } = require("./routes/covidTestsRoutes");
-const {router: vaccinationsRoute,} = require("./routes/covidVaccinationsRoutes");
+const { router: deathsRoute } = require("./routes/deathsRoutes");
+const { router: casesRoute } = require("./routes/casesRoutes");
+const { router: testsRoute } = require("./routes/testsRoutes");
+const {router: vaccinationsRoute,} = require("./routes/vaccinationsRoutes");
 const general = require("./routes/general");
 const app = express();
 
