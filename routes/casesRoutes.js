@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const covidCases = require("../models/covidCases");
+const {search, searchByCountry, GetTotal, GetTotalByCountry, commafy} = require('./utils');
+
 const router = express.Router();
 
 const filter = {
@@ -12,50 +14,9 @@ const filter = {
 };
 let location = "";
 
-const searchCases = async function () {
-  const cases = await covidCases.find().sort({ country: 1, date: 1 });
-  return cases;
-};
-
-const searchCasesByCountry = async function (country) {
-  const cases = await covidCases
-    .find({ country: country })
-    .sort({ country: 1, date: 1 });
-  return cases;
-};
-
-const GetTotalCases = function (Cases) {
-  let total = 0;
-  Cases.forEach((Case) => {
-    total += Case.newCases;
-  });
-  return total;
-};
-
-const GetTotalCasesByCountry = function (cases, country) {
-  let total = 0;
-  cases.forEach((Case) => {
-    if (Case.country === country) {
-      total += Case.newCases;
-    }
-  });
-  return total;
-};
-
-const commafy = function commafy(num) {
-  let str = num.toString().split(".");
-  if (str[0].length >= 5) {
-    str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, "$1,");
-  }
-  if (str[1] && str[1].length >= 5) {
-    str[1] = str[1].replace(/(\d{3})/g, "$1 ");
-  }
-  return str.join(".");
-};
-
 router.route("/filter/:filter").get(async (req, res) => {
-  const cases = await searchCases();
-  const totalCases = commafy(GetTotalCases(cases));
+  const cases = await search(covidCases);
+  const totalCases = commafy(GetTotal(cases, "newCases"));
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
@@ -79,9 +40,9 @@ router.route("/filter/:filter").get(async (req, res) => {
 
 router.route("/search").get(async (req, res) => {
   let { country } = req.query;
-  const cases = await searchCasesByCountry(country);
+  const cases = await searchByCountry(country, covidCases);
   location = country;
-  const totalCases = commafy(GetTotalCasesByCountry(cases, country));
+  const totalCases = commafy(GetTotalByCountry(cases, country, "newCases"));
 
   if (totalCases == 0) {
     filter.error = true;
@@ -100,12 +61,12 @@ router.route("/search").get(async (req, res) => {
 });
 
 router.get("/casesStatics", async (req, res) => {
-  const cases = await searchCases();
+  const cases = await search(covidCases);
   res.json(cases);
 });
 
 router.get("/casesStaticsByCountry", async (req, res) => {
-  const cases = await searchCasesByCountry(location);
+  const cases = await searchByCountry(location, covidCases);
   res.json(cases);
 });
 

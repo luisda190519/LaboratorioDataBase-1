@@ -30,7 +30,7 @@ const barConfig = {
     indexAxis: "y",
     elements: {
       bar: {
-        borderWidth: 2,
+        borderWidth: 4,
       },
     },
     responsive: true,

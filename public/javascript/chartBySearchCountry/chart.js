@@ -82,8 +82,6 @@ const addDeathsChartLine = async function (title, data2, selectedChart) {
     newConfig.options.plugins.title.text = title;
     newConfig.data.labels = data.labels;
 
-    console.log(newConfig);
-
     const chart = await new Chart(
       document.getElementById(selectedChart),
       newConfig

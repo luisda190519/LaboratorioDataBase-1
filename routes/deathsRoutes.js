@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const covidDeaths = require("../models/covidDeaths");
+const {search, searchByCountry, GetTotal, GetTotalByCountry, commafy} = require('./utils');
 const router = express.Router();
 
 const filter = {
@@ -10,52 +11,12 @@ const filter = {
   error: false,
   label: "deaths",
 };
+
 let location = "";
 
-const searchDeathCases = async function () {
-  const deaths = await covidDeaths.find().sort({ country: 1, date: 1 });
-  return deaths;
-};
-
-const searchDeathCasesByCountry = async function (country) {
-  const deaths = await covidDeaths
-    .find({ country: country })
-    .sort({ country: 1, date: 1 });
-  return deaths;
-};
-
-const GetTotalDeaths = function (deaths) {
-  let total = 0;
-  deaths.forEach((deathCase) => {
-    total += deathCase.newDeaths;
-  });
-  return total;
-};
-
-const GetTotalDeathsByCountry = function (deaths, country) {
-  let total = 0;
-  deaths.forEach((deathCase) => {
-    if (deathCase.country === country) {
-      total += deathCase.newDeaths;
-    }
-  });
-  return total;
-};
-
-const commafy = function commafy(num) {
-  let str = num.toString().split(".");
-  if (str[0].length >= 5) {
-    str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, "$1,");
-  }
-  if (str[1] && str[1].length >= 5) {
-    str[1] = str[1].replace(/(\d{3})/g, "$1 ");
-  }
-  return str.join(".");
-};
-
 router.route("/filter/:filter").get(async (req, res) => {
-  const deaths = await searchDeathCases();
-  const totalDeaths = commafy(GetTotalDeaths(deaths));
+  const deaths = await search(covidDeaths);
+  const totalDeaths = commafy(GetTotal(deaths, "newDeaths"));
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
@@ -75,9 +36,9 @@ router.route("/filter/:filter").get(async (req, res) => {
 
 router.route("/search").get(async (req, res) => {
   let { country } = req.query;
-  const deaths = await searchDeathCasesByCountry(country);
+  const deaths = await searchByCountry(country, covidDeaths);
   location = country;
-  const totalDeaths = commafy(GetTotalDeathsByCountry(deaths, country));
+  const totalDeaths = commafy(GetTotalByCountry(deaths, country, "newDeaths"));
 
   if (totalDeaths == 0) {
     filter.error = true;
@@ -96,12 +57,12 @@ router.route("/search").get(async (req, res) => {
 });
 
 router.get("/deathStatics", async (req, res) => {
-  const deaths = await searchDeathCases();
+  const deaths = await search(covidDeaths);
   res.json(deaths);
 });
 
 router.get("/deathStaticsByCountry", async (req, res) => {
-  const deaths = await searchDeathCasesByCountry(location);
+  const deaths = await searchByCountry(location, covidDeaths);
   res.json(deaths);
 });
 
@@ -111,4 +72,3 @@ router.get("/filter", (req, res) => {
 
 exports.filter = filter;
 exports.router = router;
-

@@ -103,7 +103,7 @@ const createWorldData = function (datos, global, daily) {
     cont++;
   });
 
-  color = randomColor();
+  color = "rgb(29,53,87)";
   data.totalWorld.push(
     addInsideObject(
       "World",
@@ -183,14 +183,15 @@ const addDeathsChartLine = async function (title, data2, selectedChart) {
 const addDeathsChartBar = async function (title, data2, labels, selectedChart) {
   try {
     let inside = new Object();
-    inside.borderColor = randomColor();
+    inside.borderColor = "rgb(29,53,87)";
     inside.data = data2;
-    inside.backgroundColor = randomColor();
+    inside.backgroundColor = "rgb(29,53,87)";
 
     newConfig = structuredClone(barConfig);
     newConfig.data.datasets.push(inside);
     newConfig.options.plugins.title.text = title;
     newConfig.data.labels = labels;
+    newConfig.elements.bar.borderWidth = 4;
 
     const chart = await new Chart(
       document.getElementById(selectedChart),
@@ -252,8 +253,6 @@ const createData = async function (url, global, daily, type) {
   addLabels(dataFetched);
   addCountryLabels(dataFetched);
   addContinentLabels(dataFetched);
-  //createTotalCountryData(dataFetched, global);
-  //createDailyCountryData(dataFetched, daily);
   createCountryData(dataFetched, global, daily);
   createWorldData(dataFetched, global, daily);
   createContinentData(dataFetched, global, daily);

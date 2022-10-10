@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const covidVaccinations = require("../models/covidVaccinations");
+const {search, searchByCountry, GetTotal, GetTotalByCountry, commafy} = require('./utils');
 const router = express.Router();
 let location = "";
 
@@ -12,52 +13,9 @@ const filter = {
   label: "vaccinations",
 };
 
-const searchVaccinations = async function () {
-  const vaccinations = await covidVaccinations
-    .find()
-    .sort({ country: 1, date: 1 });
-  return vaccinations;
-};
-
-const searchVaccinationsByCountry = async function (country) {
-  const vaccinations = await covidVaccinations
-    .find({ country: country })
-    .sort({ country: 1, date: 1 });
-  return vaccinations;
-};
-
-const GetTotalVaccinations = function (vaccinations) {
-  let total = 0;
-  vaccinations.forEach((vaccination) => {
-    total += vaccination.newVaccinations;
-  });
-  return total;
-};
-
-const GetTotalVaccinationsByCountry = function (vaccinations, country) {
-  let total = 0;
-  vaccinations.forEach((vaccination) => {
-    if (vaccination.country === country) {
-      total += vaccination.newVaccinations;
-    }
-  });
-  return total;
-};
-
-const commafy = function commafy(num) {
-  let str = num.toString().split(".");
-  if (str[0].length >= 5) {
-    str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, "$1,");
-  }
-  if (str[1] && str[1].length >= 5) {
-    str[1] = str[1].replace(/(\d{3})/g, "$1 ");
-  }
-  return str.join(".");
-};
-
 router.route("/filter/:filter").get(async (req, res) => {
-  const vaccinations = await searchVaccinations();
-  const totalVaccinations = commafy(GetTotalVaccinations(vaccinations));
+  const vaccinations = await search(covidVaccinations);
+  const totalVaccinations = commafy(GetTotal(vaccinations, "newVaccinations"));
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
@@ -81,10 +39,10 @@ router.route("/filter/:filter").get(async (req, res) => {
 
 router.route("/search").get(async (req, res) => {
   let { country } = req.query;
-  const vaccinations = await searchVaccinationsByCountry(country);
+  const vaccinations = await searchByCountry(country, covidVaccinations);
   location = country;
   const totalVaccinations = commafy(
-    GetTotalVaccinationsByCountry(vaccinations, country)
+    GetTotalByCountry(vaccinations, country, "newVaccinations")
   );
 
   if (totalVaccinations == 0) {
@@ -104,12 +62,12 @@ router.route("/search").get(async (req, res) => {
 });
 
 router.get("/vaccinationsStatics", async (req, res) => {
-  const vaccinations = await searchVaccinations();
+  const vaccinations = await search(covidVaccinations);
   res.json(vaccinations);
 });
 
 router.get("/vaccinationsStaticsByCountry", async (req, res) => {
-  const vaccinations = await searchVaccinationsByCountry(location);
+  const vaccinations = await searchByCountry(location, covidVaccinations);
   res.json(vaccinations);
 });
 

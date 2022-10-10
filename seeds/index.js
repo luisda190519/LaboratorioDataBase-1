@@ -91,7 +91,7 @@ const deleteAll = async () => {
 };
 
 //Lectura del archivo donde se encuentra todos los datos a utilizar
-fs.createReadStream("./seeds/data-copia.csv")
+fs.createReadStream("./seeds/data.csv")
   .pipe(parse({ delimiter: ",", from_line: 2 }))
   .on("data", async function (row) {
     try {
