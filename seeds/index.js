@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
 const { parse } = require("csv-parse");
+const { config } = require("dotenv");
 const covidDeaths = require("../models/covidDeaths");
 const covidCases = require("../models/covidCases");
 const covidTests = require("../models/covidTests");
 const CovidVaccinations = require("../models/covidVaccinations");
 const covidVaccinations = require("../models/covidVaccinations");
+config();
 
 //Coneccion a la base de datos
 async function main() {
-  await mongoose.connect(
-    "mongodb://localhost:27017/laboratorio_bases_de_datos_test"
-  );
+  await mongoose.connect(process.env.MONGODB_URI);
 }
 main().then(() => {
   console.log("Conectado");

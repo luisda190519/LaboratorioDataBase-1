@@ -6,12 +6,14 @@ const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const { config } = require("dotenv");
 const { router: deathsRoute } = require("./routes/deathsRoutes");
 const { router: casesRoute } = require("./routes/casesRoutes");
 const { router: testsRoute } = require("./routes/testsRoutes");
-const {router: vaccinationsRoute,} = require("./routes/vaccinationsRoutes");
+const { router: vaccinationsRoute } = require("./routes/vaccinationsRoutes");
 const general = require("./routes/general");
 const app = express();
+config();
 
 //Añadiendo el motor de templates para html, el cual es mustache
 app.engine("mustache", mustacheExpress());
@@ -33,13 +35,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Coneccion con la mongodb, la base de datos seleccionada
 async function main() {
-  await mongoose.connect(
-    "mongodb://localhost:27017/laboratorio_bases_de_datos_test"
-  );
+  await mongoose.connect(process.env.MONGODB_URI);
 }
 main().then(() => console.log("Conectado a base de datos"));
 main().catch((err) => console.log(err));
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Connected on port 3000");
 });
