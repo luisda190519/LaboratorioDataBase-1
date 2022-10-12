@@ -15,34 +15,34 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         {{#filter.global}}
-          <a class="nav-link" href="/deaths/filter/global">Deaths</a>
-          <a class="nav-link" href="/cases/filter/global">Cases</a>
-          <a class="nav-link" href="/vaccinations/filter/global">Vaccination</a>
-          <a class="nav-link" href="/tests/filter/global">Tests</a>
+          <a class="nav-link" href="/deaths/global">Deaths</a>
+          <a class="nav-link" href="/cases/global">Cases</a>
+          <a class="nav-link" href="/vaccinations/global">Vaccination</a>
+          <a class="nav-link" href="/tests/global">Tests</a>
         {{/filter.global}}
 
         {{#filter.byCountry}}
-          <a class="nav-link" href="/deaths/filter/byCountry">Deaths</a>
-          <a class="nav-link" href="/cases/filter/byCountry">Cases</a>
-          <a class="nav-link" href="/vaccinations/filter/byCountry">Vaccination</a>
-          <a class="nav-link" href="/tests/filter/byCountry">Tests</a>
+          <a class="nav-link" href="/deaths/byCountry">Deaths</a>
+          <a class="nav-link" href="/cases/byCountry">Cases</a>
+          <a class="nav-link" href="/vaccinations/byCountry">Vaccination</a>
+          <a class="nav-link" href="/tests/byCountry">Tests</a>
         {{/filter.byCountry}}
 
         {{#filter.byContinent}}
-          <a class="nav-link" href="/deaths/filter/bycontinent">Deaths</a>
-          <a class="nav-link" href="/cases/filter/byContinent">Cases</a>
-          <a class="nav-link" href="/vaccinations/filter/byContinent">Vaccination</a>
-          <a class="nav-link" href="/tests/filter/byContinent">Tests</a>
+          <a class="nav-link" href="/deaths/bycontinent">Deaths</a>
+          <a class="nav-link" href="/cases/byContinent">Cases</a>
+          <a class="nav-link" href="/vaccinations/byContinent">Vaccination</a>
+          <a class="nav-link" href="/tests/byContinent">Tests</a>
         {{/filter.byContinent}}
       </div>
 
       <div class="ms-auto">
         <div class="navbar-nav">
-          <a class="nav-link mx-2" href="/{{filter.label}}/filter/global">Global</a>
-          <a class="nav-link mx-2" href="/{{filter.label}}/filter/byCountry"
+          <a class="nav-link mx-2" href="/{{filter.label}}/global">Global</a>
+          <a class="nav-link mx-2" href="/{{filter.label}}/byCountry"
             >By country</a
           >
-          <a class="nav-link mx-2" href="/{{filter.label}}/filter/byContinent"
+          <a class="nav-link mx-2" href="/{{filter.label}}/byContinent"
             >By continent</a
           >
 

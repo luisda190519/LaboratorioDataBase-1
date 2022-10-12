@@ -35,6 +35,20 @@ const randomColor = function () {
   return "rgb(" + r + ", " + g + ", " + b + ")";
 };
 
+const isContinent = function (name) {
+  if (
+    name === "South America" ||
+    name === "North America" ||
+    name === "Africa" ||
+    name === "Asia" ||
+    name === "Oceania" ||
+    name === "Europe"
+  ) {
+    return true
+  }
+  return false
+};
+
 const addLabels = function (days) {
   days.forEach((day) => {
     if (!data.labels.includes(day.date)) {
@@ -77,7 +91,6 @@ const addInsideObject = function (label, array, border, color) {
 
   return inside;
 };
-
 
 const createWorldData = function (datos, global, daily) {
   let last = datos[0];
@@ -127,9 +140,13 @@ const createCountryData = function (datos, global, daily) {
     if (!(day.continent === "Continent")) {
       if (!(last.country == day.country)) {
         color = randomColor();
-        data.totalCountry.push(addInsideObject(last.country, globalData, 2, color));
-        data.newCountry.push(addInsideObject(last.country, dailyData, 2, color));
-        totalData.push(Math.max(... globalData));
+        data.totalCountry.push(
+          addInsideObject(last.country, globalData, 2, color)
+        );
+        data.newCountry.push(
+          addInsideObject(last.country, dailyData, 2, color)
+        );
+        totalData.push(Math.max(...globalData));
         globalData = [];
         dailyData = [];
       }
@@ -149,16 +166,20 @@ const createContinentData = function (datos, global, daily) {
   let totalData = [];
 
   datos.forEach((day) => {
-    if (day.continent === "Continent") {
+    if (day.continent === "Continent" && isContinent(day.country)) {
       globalData.push(day[global]);
       dailyData.push(day[daily]);
-    }else if(last.continent === "Continent"){
+    } else if (last.continent === "Continent" && isContinent(last.country)) {
       color = randomColor();
-        data.totalContinent.push(addInsideObject(last.country, globalData, 2, color));
-        data.newContinent.push(addInsideObject(last.country, dailyData, 2, color));
-        totalData.push(globalData[globalData.length - 1]);
-        globalData = [];
-        dailyData = [];
+      data.totalContinent.push(
+        addInsideObject(last.country, globalData, 2, color)
+      );
+      data.newContinent.push(
+        addInsideObject(last.country, dailyData, 2, color)
+      );
+      totalData.push(globalData[globalData.length - 1]);
+      globalData = [];
+      dailyData = [];
     }
     last = day;
   });
@@ -191,13 +212,14 @@ const addDeathsChartBar = async function (title, data2, labels, selectedChart) {
     newConfig.data.datasets.push(inside);
     newConfig.options.plugins.title.text = title;
     newConfig.data.labels = labels;
-    newConfig.elements.bar.borderWidth = 4;
 
     const chart = await new Chart(
       document.getElementById(selectedChart),
       newConfig
     );
-  } catch (e) {}
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const addDeathsChartPie = async function (title, data2, labels, selectedChart) {
@@ -299,7 +321,6 @@ const createData = async function (url, global, daily, type) {
     data.newContinent,
     "chart8"
   );
-
   await addDeathsChartBar(
     "COVID-19 global total world " + type,
     data.continentTotal,
@@ -323,28 +344,28 @@ const start = async function () {
 
   if (dataFetched.label === "deaths") {
     await createData(
-      "http://localhost:3000/deaths/deathStatics",
+      "http://localhost:3000/deaths/data/deathStatics",
       "totalDeaths",
       "newDeaths",
       "deaths"
     );
   } else if (dataFetched.label === "cases") {
     await createData(
-      "http://localhost:3000/cases/casesStatics",
+      "http://localhost:3000/cases/data/casesStatics",
       "totalCases",
       "newCases",
       "cases"
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "http://localhost:3000/tests/testStatics",
+      "http://localhost:3000/tests/data/testStatics",
       "totalTest",
       "newTest",
       "tests"
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "http://localhost:3000/vaccinations/vaccinationsStatics",
+      "http://localhost:3000/vaccinations/data/vaccinationsStatics",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations"

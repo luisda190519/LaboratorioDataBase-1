@@ -17,6 +17,9 @@ const lineConfig = {
         text: "",
       },
     },
+    interaction: {
+      intersect: false,
+    },
   },
 };
 

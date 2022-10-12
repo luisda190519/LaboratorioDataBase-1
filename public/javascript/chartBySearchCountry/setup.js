@@ -15,6 +15,9 @@ const lineConfig = {
         text: "",
       },
     },
+    interaction: {
+      intersect: false,
+    },
     scales: {
       y: {
         stacked: true,

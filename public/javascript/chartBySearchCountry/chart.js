@@ -117,28 +117,28 @@ const start = async function () {
 
   if (dataFetched.label === "deaths") {
     await createData(
-      "http://localhost:3000/deaths/deathStaticsByCountry",
+      "http://localhost:3000/deaths/data/deathStaticsByCountry",
       "totalDeaths",
       "newDeaths",
       "deaths"
     );
   } else if (dataFetched.label === "cases") {
     await createData(
-      "http://localhost:3000/cases/casesStaticsByCountry",
+      "http://localhost:3000/cases/data/casesStaticsByCountry",
       "totalCases",
       "newCases",
       "cases"
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "http://localhost:3000/tests/testsStaticsByCountry",
+      "http://localhost:3000/tests/data/testsStaticsByCountry",
       "totalTest",
       "newTest",
       "tests"
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "http://localhost:3000/vaccinations/vaccinationsStaticsByCountry",
+      "http://localhost:3000/vaccinations/data/vaccinationsStaticsByCountry",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations"

@@ -13,7 +13,7 @@ const filter = {
   label: "vaccinations",
 };
 
-router.route("/filter/:filter").get(async (req, res) => {
+router.route("/:filter").get(async (req, res) => {
   const vaccinations = await search(covidVaccinations);
   const totalVaccinations = commafy(GetTotal(vaccinations, "newVaccinations"));
   if (req.params.filter === "global") {
@@ -47,7 +47,7 @@ router.route("/search").get(async (req, res) => {
 
   if (totalVaccinations == 0) {
     filter.error = true;
-    res.redirect("/vaccinations/filter/global");
+    res.redirect("/vaccinations/global");
   } else {
     filter.byCountry = true;
     filter.global = false;
@@ -61,12 +61,12 @@ router.route("/search").get(async (req, res) => {
   }
 });
 
-router.get("/vaccinationsStatics", async (req, res) => {
+router.get("/data/vaccinationsStatics", async (req, res) => {
   const vaccinations = await search(covidVaccinations);
   res.json(vaccinations);
 });
 
-router.get("/vaccinationsStaticsByCountry", async (req, res) => {
+router.get("/data/vaccinationsStaticsByCountry", async (req, res) => {
   const vaccinations = await searchByCountry(location, covidVaccinations);
   res.json(vaccinations);
 });

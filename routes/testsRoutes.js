@@ -14,7 +14,7 @@ const filter = {
 
 let location = "";
 
-router.route("/filter/:filter").get(async (req, res) => {
+router.route("/:filter").get(async (req, res) => {
   const tests = await search(covidTests);
   const totalTests = commafy(GetTotal(tests, "newTest"));
   if (req.params.filter === "global") {
@@ -46,7 +46,7 @@ router.route("/search").get(async (req, res) => {
 
   if (totalTests == 0) {
     filter.error = true;
-    res.redirect("/tests/filter/global");
+    res.redirect("/tests/global");
   } else {
     filter.byCountry = true;
     filter.global = false;
@@ -60,12 +60,12 @@ router.route("/search").get(async (req, res) => {
   }
 });
 
-router.get("/testStatics", async (req, res) => {
+router.get("/data/testStatics", async (req, res) => {
   const tests = await search(covidTests);
   res.json(tests);
 });
 
-router.get("/testsStaticsByCountry", async (req, res) => {
+router.get("/data/testsStaticsByCountry", async (req, res) => {
   const tests = await searchByCountry(location, covidTests);
   res.json(tests);
 });
