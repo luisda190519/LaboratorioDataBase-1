@@ -16,7 +16,7 @@ let location = "";
 
 router.route("/:filter").get(async (req, res) => {
   const deaths = await search(covidDeaths);
-  const totalDeaths = commafy(GetTotal(deaths, "newDeaths"));
+  const totalDeaths = commafy(GetTotal(deaths, "totalDeaths"));
   if (req.params.filter === "global") {
     filter.global = true;
     filter.byCountry = false;
@@ -34,11 +34,11 @@ router.route("/:filter").get(async (req, res) => {
   filter.error = false;
 });
 
-router.route("/search").get(async (req, res) => {
+router.route("/query/search").get(async (req, res) => {
   let { country } = req.query;
   const deaths = await searchByCountry(country, covidDeaths);
   location = country;
-  const totalDeaths = commafy(GetTotalByCountry(deaths, country, "newDeaths"));
+  const totalDeaths = commafy(GetTotalByCountry(deaths, country, "totalDeaths"));
 
   if (totalDeaths == 0) {
     filter.error = true;

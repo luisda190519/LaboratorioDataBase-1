@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container-fluid mx-2">
     <a class="navbar-brand" href="/">Covid-19</a>
     <button
@@ -15,38 +15,44 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         {{#filter.global}}
-          <a class="nav-link" href="/deaths/global">Deaths</a>
-          <a class="nav-link" href="/cases/global">Cases</a>
-          <a class="nav-link" href="/vaccinations/global">Vaccination</a>
-          <a class="nav-link" href="/tests/global">Tests</a>
+        <a class="nav-link" href="/deaths/global">Deaths</a>
+        <a class="nav-link" href="/cases/global">Cases</a>
+        <a class="nav-link" href="/vaccinations/global">Vaccination</a>
+        <a class="nav-link" href="/tests/global">Tests</a>
         {{/filter.global}}
 
         {{#filter.byCountry}}
-          <a class="nav-link" href="/deaths/byCountry">Deaths</a>
-          <a class="nav-link" href="/cases/byCountry">Cases</a>
-          <a class="nav-link" href="/vaccinations/byCountry">Vaccination</a>
-          <a class="nav-link" href="/tests/byCountry">Tests</a>
+        <a class="nav-link" href="/deaths/byCountry">Deaths</a>
+        <a class="nav-link" href="/cases/byCountry">Cases</a>
+        <a class="nav-link" href="/vaccinations/byCountry">Vaccination</a>
+        <a class="nav-link" href="/tests/byCountry">Tests</a>
         {{/filter.byCountry}}
 
         {{#filter.byContinent}}
-          <a class="nav-link" href="/deaths/bycontinent">Deaths</a>
-          <a class="nav-link" href="/cases/byContinent">Cases</a>
-          <a class="nav-link" href="/vaccinations/byContinent">Vaccination</a>
-          <a class="nav-link" href="/tests/byContinent">Tests</a>
+        <a class="nav-link" href="/deaths/bycontinent">Deaths</a>
+        <a class="nav-link" href="/cases/byContinent">Cases</a>
+        <a class="nav-link" href="/vaccinations/byContinent">Vaccination</a>
+        <a class="nav-link" href="/tests/byContinent">Tests</a>
         {{/filter.byContinent}}
       </div>
 
       <div class="ms-auto">
-        <div class="navbar-nav">
-          <a class="nav-link mx-2" href="/{{filter.label}}/global">Global</a>
-          <a class="nav-link mx-2" href="/{{filter.label}}/byCountry"
+        <div class="navbar-nav">  
+
+          <a class="nav-link mx-2" href="/{{ filter.label }}/global">Global</a>
+          <a class="nav-link mx-2" href="/{{ filter.label }}/byCountry"
             >By country</a
           >
-          <a class="nav-link mx-2" href="/{{filter.label}}/byContinent"
+          <a class="nav-link mx-2" href="/{{ filter.label }}/byContinent"
             >By continent</a
           >
 
-          <form class="d-flex" role="search" action="/{{filter.label}}/search/" method="get">
+          <form
+            class="d-flex"
+            role="search"
+            action="/{{ filter.label }}/query/search/"
+            method="get"
+          >
             <input
               class="form-control me-2"
               type="search"
@@ -61,3 +67,14 @@
     </div>
   </div>
 </nav>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>

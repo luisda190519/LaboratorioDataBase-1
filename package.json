@@ -18,8 +18,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node seeds/index.js ",
-    "dev" : "nodemon app.js --exec babel-node"
+    "start": "node app.js"
   },
   "author": "Luisda1905",
   "license": "ISC",

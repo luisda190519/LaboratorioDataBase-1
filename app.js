@@ -35,11 +35,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Coneccion con la mongodb, la base de datos seleccionada
 async function main() {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect("mongodb://localhost:27017/laboratorio_bases_de_datos_test" || process.env.MONGODB_URI);
 }
 main().then(() => console.log("Conectado a base de datos"));
 main().catch((err) => console.log(err));
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Connected on port 3000");
 });

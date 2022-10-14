@@ -11,11 +11,10 @@ config();
 
 //Coneccion a la base de datos
 async function main() {
-  await mongoose.connect(process.env.MONGODB_URI);
+  await mongoose.connect("mongodb://localhost:27017/laboratorio_bases_de_datos_test" || process.env.MONGODB_URI);
 }
 main().then(() => {
   console.log("Conectado");
-  deleteAll();
 });
 
 main().catch((err) => console.log(err));
@@ -32,55 +31,57 @@ const seedDB = async (row) => {
     row[1] = "Continent";
   }
 
-  const deaths = new covidDeaths({
-    isoCode: row[0],
-    continent: row[1],
-    country: row[2],
-    date: row[3],
-    totalDeaths: row[7],
-    newDeaths: row[8],
-    population: row[48],
-    medianAge: row[50],
-  });
+  if (row[3].slice(-2) === "01" || row[3].slice(-2) === "15" || row[3].slice(-2) === "28") {
+    const deaths = new covidDeaths({
+      isoCode: row[0],
+      continent: row[1],
+      country: row[2],
+      date: row[3],
+      totalDeaths: row[7],
+      newDeaths: row[8],
+      population: row[48],
+      medianAge: row[50],
+    });
 
-  const cases = new covidCases({
-    isoCode: row[0],
-    continent: row[1],
-    country: row[2],
-    date: row[3],
-    newCases: row[5],
-    totalCases: row[4],
-    population: row[48],
-    medianAge: row[50],
-  });
+    const cases = new covidCases({
+      isoCode: row[0],
+      continent: row[1],
+      country: row[2],
+      date: row[3],
+      newCases: row[5],
+      totalCases: row[4],
+      population: row[48],
+      medianAge: row[50],
+    });
 
-  const tests = new covidTests({
-    isoCode: row[0],
-    continent: row[1],
-    country: row[2],
-    date: row[3],
-    totalTest: row[25],
-    newTest: row[26],
-    population: row[48],
-    medianAge: row[50],
-  });
+    const tests = new covidTests({
+      isoCode: row[0],
+      continent: row[1],
+      country: row[2],
+      date: row[3],
+      totalTest: row[25],
+      newTest: row[26],
+      population: row[48],
+      medianAge: row[50],
+    });
 
-  const vaccination = new CovidVaccinations({
-    isoCode: row[0],
-    continent: row[1],
-    country: row[2],
-    date: row[3],
-    totalVaccinations: row[34],
-    newVaccinations: row[38],
-    PeopleVaccinated: row[35],
-    population: row[48],
-    medianAge: row[50],
-  });
+    const vaccination = new CovidVaccinations({
+      isoCode: row[0],
+      continent: row[1],
+      country: row[2],
+      date: row[3],
+      totalVaccinations: row[34],
+      newVaccinations: row[38],
+      PeopleVaccinated: row[35],
+      population: row[48],
+      medianAge: row[50],
+    });
 
-  await deaths.save();
-  await cases.save();
-  await tests.save();
-  await vaccination.save();
+    await deaths.save();
+    await cases.save();
+    await tests.save();
+    await vaccination.save();
+  }
 };
 
 const deleteAll = async () => {
@@ -96,6 +97,7 @@ fs.createReadStream("./seeds/data.csv")
   .on("data", async function (row) {
     try {
       await seedDB(row);
+      //await deleteAll();
     } catch (e) {
       console.log(e);
     }

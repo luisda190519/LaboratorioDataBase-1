@@ -10,19 +10,23 @@ module.exports.searchByCountry = async function (country, model) {
   return result;
 };
 
-module.exports.GetTotal = function (data, daily) {
+module.exports.GetTotal = function (data, global) {
   let total = 0;
+  let last = data[0];
   data.forEach((d) => {
-    total += d[daily];
+    if (!(last.country === d.country)) {
+      total += last[global];
+    }
+    last = d;
   });
   return total;
 };
 
-module.exports.GetTotalByCountry = function (data, country, daily) {
+module.exports.GetTotalByCountry = function (data, country, global) {
   let total = 0;
   data.forEach((d) => {
     if (d.country === country) {
-      total += d[daily];
+      total = d[global];
     }
   });
   return total;
