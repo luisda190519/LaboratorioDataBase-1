@@ -106,33 +106,33 @@ const createData = async function (url, global, daily, type) {
 };
 
 const start = async function () {
-  result = await fetch("http://localhost:3000/filter");
+  result = await fetch("https://laboratoriobasesdedatos.azurewebsites.net/filter");
   dataFetched = await result.json();
 
   if (dataFetched.label === "deaths") {
     await createData(
-      "http://localhost:3000/deaths/data/deathStaticsByCountry",
+      "https://laboratoriobasesdedatos.azurewebsites.net/deaths/data/deathStaticsByCountry",
       "totalDeaths",
       "newDeaths",
       "deaths"
     );
   } else if (dataFetched.label === "cases") {
     await createData(
-      "http://localhost:3000/cases/data/casesStaticsByCountry",
+      "https://laboratoriobasesdedatos.azurewebsites.net/cases/data/casesStaticsByCountry",
       "totalCases",
       "newCases",
       "cases"
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "http://localhost:3000/tests/data/testsStaticsByCountry",
+      "https://laboratoriobasesdedatos.azurewebsites.net/tests/data/testsStaticsByCountry",
       "totalTest",
       "newTest",
       "tests"
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "http://localhost:3000/vaccinations/data/vaccinationsStaticsByCountry",
+      "https://laboratoriobasesdedatos.azurewebsites.net/vaccinations/data/vaccinationsStaticsByCountry",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations"

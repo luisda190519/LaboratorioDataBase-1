@@ -11,10 +11,14 @@ config();
 
 //Coneccion a la base de datos
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/laboratorio_bases_de_datos_test" || process.env.MONGODB_URI);
+  await mongoose.connect(
+    process.env.MONGODB_URI ||
+      "mongodb://localhost:27017/laboratorio_bases_de_datos_test"
+  );
 }
 main().then(() => {
   console.log("Conectado");
+  //deleteAll();
 });
 
 main().catch((err) => console.log(err));
@@ -31,7 +35,11 @@ const seedDB = async (row) => {
     row[1] = "Continent";
   }
 
-  if (row[3].slice(-2) === "01" || row[3].slice(-2) === "15" || row[3].slice(-2) === "28") {
+  if (
+    row[3].slice(-2) === "01" ||
+    row[3].slice(-2) === "15" ||
+    row[3].slice(-2) === "28"
+  ) {
     const deaths = new covidDeaths({
       isoCode: row[0],
       continent: row[1],
@@ -97,7 +105,6 @@ fs.createReadStream("./seeds/data.csv")
   .on("data", async function (row) {
     try {
       await seedDB(row);
-      //await deleteAll();
     } catch (e) {
       console.log(e);
     }

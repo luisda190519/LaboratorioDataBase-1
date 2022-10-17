@@ -343,13 +343,13 @@ const createData = async function (url, global, daily, type, query) {
 };
 
 const start = async function () {
-  result = await fetch("http://localhost:3000/filter");
+  result = await fetch("https://laboratoriobasesdedatos.azurewebsites.net/filter");
   dataFetched = await result.json();
   console.log(dataFetched);
 
   if (dataFetched.label === "deaths") {
     await createData(
-      "http://localhost:3000/deaths/data/deathStatics",
+      "https://laboratoriobasesdedatos.azurewebsites.net/deaths/data/deathStatics",
       "totalDeaths",
       "newDeaths",
       "deaths",
@@ -357,7 +357,7 @@ const start = async function () {
     );
   } else if (dataFetched.label === "cases") {
     await createData(
-      "http://localhost:3000/cases/data/casesStatics",
+      "https://laboratoriobasesdedatos.azurewebsites.net/cases/data/casesStatics",
       "totalCases",
       "newCases",
       "cases",
@@ -365,7 +365,7 @@ const start = async function () {
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "http://localhost:3000/tests/data/testStatics",
+      "https://laboratoriobasesdedatos.azurewebsites.net/tests/data/testStatics",
       "totalTest",
       "newTest",
       "tests",
@@ -373,7 +373,7 @@ const start = async function () {
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "http://localhost:3000/vaccinations/data/vaccinationsStatics",
+      "https://laboratoriobasesdedatos.azurewebsites.net/vaccinations/data/vaccinationsStatics",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations",
