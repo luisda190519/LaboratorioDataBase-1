@@ -21,6 +21,9 @@
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
     {{#filter.error}}
     {{> ./partials/flash}}
@@ -152,6 +155,24 @@
       </p>
 
       <div id="mapChart"></div>
+    </div>
+
+    <div class="card mx-3 my-3">
+      <h2 class="card-title pt-4 ps-3">
+        Cumulative {{ filter.label }} line chart
+      </h2>
+
+      <hr />
+
+      <p class="card-body">
+        Reported {{ filter.label }} are the number of
+        {{ filter.label }} officially reported as due to COVID-19. Total
+        {{ filter.label }} are the estimated number of
+        {{ filter.label }} attributable to COVID-19, including unreported
+        {{ filter.label }}.
+      </p>
+
+      <div id="chartdiv" style="width: 100%; height: 5000px;"></div>
     </div>
 
     {{/filter.byCountry}}

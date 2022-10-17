@@ -11,6 +11,7 @@ let data = {
   continentTotal: [],
   newContinent: [],
   totalContinent: [],
+  barRace: {},
 };
 
 const clearAll = async function () {
@@ -25,6 +26,7 @@ const clearAll = async function () {
     totalCountryDataset: [],
     continentLabels: [],
     continentTotal: [],
+    barRace: [],
   };
 };
 
@@ -74,7 +76,11 @@ const addContinentLabels = function (days) {
   let labels = [];
   let last = days[0];
   days.forEach((day) => {
-    if (!(last.country == day.country) && last.continent === "Continent" && isContinent(last.country)) {
+    if (
+      !(last.country == day.country) &&
+      last.continent === "Continent" &&
+      isContinent(last.country)
+    ) {
       data.continentLabels.push(last.country);
     }
     last = day;
@@ -187,6 +193,46 @@ const createContinentData = function (datos, global, daily) {
   data.continentTotal = totalData;
 };
 
+const createBarChartRaceData = function (datos, global) {
+  let last = datos[0];
+  let totalData = [];
+  let inside = new Object();
+
+  datos.forEach((day) => {
+    if (!(day.continent === "Continent")) {
+      if (!(last.country == day.country)) {
+        inside[last.country] = totalData;
+        totalData = [];
+      }
+      totalData.push(day[global]);
+    }
+    last = day;
+  });
+
+  let inside2 = new Object();
+  let cont = 0;
+  console.log(inside);
+
+  data.labels.forEach((day) => {
+    data.countryLables.forEach((country) => {
+      try {
+        if (inside[country].at(cont) === undefined) {
+          inside2[country] = 0;
+        } else {
+          inside2[country] = inside[country].at(cont);
+        }
+      } catch (e) {
+        inside2[country] = 0;
+      }
+    });
+    cont++;
+    data.barRace[day] = inside2;
+    inside2 = new Object();
+  });
+
+  console.log(data.barRace);
+};
+
 const addDeathsChartLine = async function (title, data2, selectedChart) {
   try {
     newConfig = structuredClone(lineConfig);
@@ -289,6 +335,9 @@ const createData = async function (url, global, daily, type, query) {
     );
   } else if (query[1]) {
     createCountryData(dataFetched, global, daily);
+    createBarChartRaceData(dataFetched, global);
+
+    await startRace(data.barRace, data.labels);
 
     await addDeathsChartLine(
       "COVID-19 total world " + type + " by country",
@@ -343,6 +392,8 @@ const createData = async function (url, global, daily, type, query) {
 };
 
 const start = async function () {
+  //https://laboratoriobasesdedatos.azurewebsites.net
+  //http://localhost:3000
   result = await fetch("https://laboratoriobasesdedatos.azurewebsites.net/filter");
   dataFetched = await result.json();
   console.log(dataFetched);

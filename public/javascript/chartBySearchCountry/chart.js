@@ -106,6 +106,8 @@ const createData = async function (url, global, daily, type) {
 };
 
 const start = async function () {
+  //https://laboratoriobasesdedatos.azurewebsites.net
+  //https:/localhost:3000
   result = await fetch("https://laboratoriobasesdedatos.azurewebsites.net/filter");
   dataFetched = await result.json();
 
