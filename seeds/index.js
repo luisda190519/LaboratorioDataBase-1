@@ -37,8 +37,12 @@ const seedDB = async (row) => {
 
   if (
     row[3].slice(-2) === "01" ||
+    row[3].slice(-2) === "05" ||
+    row[3].slice(-2) === "10" ||
     row[3].slice(-2) === "15" ||
-    row[3].slice(-2) === "28"
+    row[3].slice(-2) === "20" ||
+    row[3].slice(-2) === "25" ||
+    row[3].slice(-2) === "30"
   ) {
     const deaths = new covidDeaths({
       isoCode: row[0],

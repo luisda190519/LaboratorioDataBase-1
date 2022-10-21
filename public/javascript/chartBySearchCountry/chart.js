@@ -4,7 +4,6 @@ let data = {
   new: [],
 };
 
-
 const clearAll = async function () {
   data = {
     total: [],
@@ -41,7 +40,7 @@ const createTotalData = function (days, global) {
     cont++;
   });
 
-  inside.borderColor ="rgb(29,53,87)";
+  inside.borderColor = "rgb(29,53,87)";
   inside.borderWidth = 3;
   inside.radius = 0;
   inside.data = total;
@@ -106,35 +105,40 @@ const createData = async function (url, global, daily, type) {
 };
 
 const start = async function () {
-  //https://laboratoriobasesdedatos.azurewebsites.net
-  //https:/localhost:3000
-  result = await fetch("https://laboratoriobasesdedatos.azurewebsites.net/filter");
+  let url = "https://laboratoriobasesdedatos.azurewebsites.net";
+  try {
+    result = await fetch(url + "/filter");
+  } catch (e) {
+    url = "http://localhost:3000";
+    result = await fetch(url + "/filter");
+  }
+
   dataFetched = await result.json();
 
   if (dataFetched.label === "deaths") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/deaths/data/deathStaticsByCountry",
+      url + "/deaths/data/deathStaticsByCountry",
       "totalDeaths",
       "newDeaths",
       "deaths"
     );
   } else if (dataFetched.label === "cases") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/cases/data/casesStaticsByCountry",
+      url + "/cases/data/casesStaticsByCountry",
       "totalCases",
       "newCases",
       "cases"
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/tests/data/testsStaticsByCountry",
+      url + "/tests/data/testsStaticsByCountry",
       "totalTest",
       "newTest",
       "tests"
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/vaccinations/data/vaccinationsStaticsByCountry",
+      url + "/vaccinations/data/vaccinationsStaticsByCountry",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations"

@@ -210,26 +210,24 @@ const createBarChartRaceData = function (datos, global) {
   });
 
   let inside2 = new Object();
+  let array = [];
   let cont = 0;
-  console.log(inside);
 
   data.labels.forEach((day) => {
     data.countryLables.forEach((country) => {
+      inside2["country"] = country;
       try {
-        if (inside[country].at(cont) === undefined) {
-          inside2[country] = 0;
-        } else {
-          inside2[country] = inside[country].at(cont);
-        }
+        inside2["total"] = inside[country].at(cont);
       } catch (e) {
-        inside2[country] = 0;
+        inside2["total"] = 0;
       }
+      array.push(inside2);
+      inside2 = new Object();
     });
     cont++;
-    data.barRace[day] = inside2;
-    inside2 = new Object();
+    data.barRace[day] = array;
+    array = [];
   });
-
   console.log(data.barRace);
 };
 
@@ -392,15 +390,20 @@ const createData = async function (url, global, daily, type, query) {
 };
 
 const start = async function () {
-  //https://laboratoriobasesdedatos.azurewebsites.net
-  //http://localhost:3000
-  result = await fetch("https://laboratoriobasesdedatos.azurewebsites.net/filter");
+  let url = "https://laboratoriobasesdedatos.azurewebsites.net";
+  try {
+    result = await fetch(url + "/filter");
+  } catch (e) {
+    url = "http://localhost:3000";
+    result = await fetch(url + "/filter");
+  }
+
   dataFetched = await result.json();
   console.log(dataFetched);
 
   if (dataFetched.label === "deaths") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/deaths/data/deathStatics",
+      url + "/deaths/data/deathStatics",
       "totalDeaths",
       "newDeaths",
       "deaths",
@@ -408,7 +411,7 @@ const start = async function () {
     );
   } else if (dataFetched.label === "cases") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/cases/data/casesStatics",
+      url + "/cases/data/casesStatics",
       "totalCases",
       "newCases",
       "cases",
@@ -416,7 +419,7 @@ const start = async function () {
     );
   } else if (dataFetched.label === "tests") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/tests/data/testStatics",
+      url + "/tests/data/testStatics",
       "totalTest",
       "newTest",
       "tests",
@@ -424,7 +427,7 @@ const start = async function () {
     );
   } else if (dataFetched.label === "vaccinations") {
     await createData(
-      "https://laboratoriobasesdedatos.azurewebsites.net/vaccinations/data/vaccinationsStatics",
+      url + "/vaccinations/data/vaccinationsStatics",
       "totalVaccinations",
       "newVaccinations",
       "vaccinations",

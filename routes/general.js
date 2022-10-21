@@ -4,7 +4,7 @@ const { filter } = require("./deathsRoutes");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.render("./templates/home");
+  res.redirect("deaths/global")
 });
 
 router.get("/filter", (req, res) => {
