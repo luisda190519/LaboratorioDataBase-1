@@ -88,7 +88,7 @@ const startRace = async function (barData, labels) {
     label.x = am4core.percent(97);
     label.y = am4core.percent(95);
     label.horizontalCenter = "right";
-    label.verticalCenter = "middle";
+    label.verticalCenter = "up";
     label.dx = -15;
     label.fontSize = 50;
     

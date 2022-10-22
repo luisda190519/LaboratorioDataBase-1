@@ -1,12 +1,18 @@
 module.exports.search = async function (model) {
-  const result = await model.find().sort({ country: 1, date: 1 });
+  const result = await model.find();
+  result.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
+  result.sort((a, b) =>
+    a.country > b.country ? 1 : b.country > a.country ? -1 : 0
+  );
   return result;
 };
 
 module.exports.searchByCountry = async function (country, model) {
-  const result = await model
-    .find({ country: country })
-    .sort({ country: 1, date: 1 });
+  const result = await model.find({ country: country });
+  result.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
+  result.sort((a, b) =>
+    a.country > b.country ? 1 : b.country > a.country ? -1 : 0
+  );
   return result;
 };
 

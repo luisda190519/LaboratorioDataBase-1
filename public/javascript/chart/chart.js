@@ -228,6 +228,7 @@ const createBarChartRaceData = function (datos, global) {
     data.barRace[day] = array;
     array = [];
   });
+
   console.log(data.barRace);
 };
 

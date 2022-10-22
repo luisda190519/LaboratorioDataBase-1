@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //Coneccion con la mongodb, la base de datos seleccionada
 async function main() {
   await mongoose.connect(
-    process.env.MONGODB_URI ||
+    process.env.MONGODB_URL_TOTAL ||
       "mongodb://localhost:27017/laboratorio_bases_de_datos_test"
   );
 }
