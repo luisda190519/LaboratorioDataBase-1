@@ -16,11 +16,42 @@ module.exports.searchByCountry = async function (country, model) {
   return result;
 };
 
+const isContinent = function (name) {
+  if (
+    name === "South America" ||
+    name === "North America" ||
+    name === "Africa" ||
+    name === "Asia" ||
+    name === "Oceania" ||
+    name === "Europe"
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const isValidCountry = function(name){
+  if (
+    name === "High income" ||
+    name === "Low income" ||
+    name === "International" ||
+    name === "World" ||
+    name === "zzzzzzzzz" ||
+    name === "Lower middle income" ||
+    name === "Upper middle income" ||
+    name === "European Uninon" ||
+    name === "Europe"
+  ) {
+    return true;
+  }
+  return false;
+}
+
 module.exports.GetTotal = function (data, global) {
   let total = 0;
   let last = data[0];
   data.forEach((d) => {
-    if (!(last.country === d.country)) {
+    if (!(last.country === d.country) && !isContinent(last.country) && !isValidCountry(last.country)) {
       total += last[global];
     }
     last = d;

@@ -106,7 +106,7 @@ const startRace = async function (barData, labels) {
       }
     })
     
-    var stepDuration = 4000;
+    var stepDuration = 1000;
     let cont = 0;
     
     var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());

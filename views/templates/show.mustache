@@ -12,7 +12,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="icon" href="logo.png" type="image/icon type">
+    <link rel="icon" href="logo.png" type="image/icon type" />
   </head>
   <body>
     {{> ./partials/navbar}}
@@ -33,9 +33,7 @@
     {{#filter.global}}
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Cumulative {{ filter.label }}</h2>
 
       <hr />
 
@@ -55,18 +53,14 @@
     </div>
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Daily {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Reported {{ filter.label }} are the number of
-        {{ filter.label }} officially reported as due to COVID-19. Total
-        {{ filter.label }} are the estimated number of
-        {{ filter.label }} attributable to COVID-19, including unreported
-        {{ filter.label }}.
+        Daily {{ filter.label }} is the best indicator of the progression of the
+        pandemic, although there is generally a 17-21 day lag between infection
+        and {{ filter.label }}.
       </p>
 
       <canvas id="chart2" style="width: 300px" class="mx-5"></canvas>
@@ -77,9 +71,7 @@
     {{#filter.byCountry}}
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Cumulative {{ filter.label }}</h2>
 
       <hr />
 
@@ -99,81 +91,68 @@
     </div>
 
     <div class="card mx-3 my-5">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Daily {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Reported {{ filter.label }} are the number of
-        {{ filter.label }} officially reported as due to COVID-19. Total
-        {{ filter.label }} are the estimated number of
-        {{ filter.label }} attributable to COVID-19, including unreported
-        {{ filter.label }}.
+        Daily {{ filter.label }} is the best indicator of the progression of the
+        pandemic, although there is generally a 17-21 day lag between infection
+        and {{ filter.label }}.
       </p>
 
       <canvas id="chart4" style="width: 300px" class="mx-5"></canvas>
     </div>
 
     <div class="card mx-3 my-5">
-      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }} Bar chart</h2>
+      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Daily {{ filter.label }} is the best indicator of the progression of the
-        pandemic, although there is generally a 17-21 day lag between infection
-        and {{ filter.label }}.
+        You can see the number of {{ filter.label }} by covid 19, through a bar
+        chart
       </p>
 
       <canvas id="chart5" style="width: 300px" class="mx-5"></canvas>
     </div>
 
     <div class="card mx-3 my-5">
-      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }} Bar chart</h2>
+      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Daily {{ filter.label }} is the best indicator of the progression of the
-        pandemic, although there is generally a 17-21 day lag between infection
-        and {{ filter.label }}.
+        You can see the number of {{ filter.label }} by covid 19, through a pie
+        chart
       </p>
 
       <canvas id="chart6" style="width: 300px" class="mx-5"></canvas>
     </div>
 
     <div class="card mx-3 my-5">
-      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }} Bar chart</h2>
+      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Daily {{ filter.label }} is the best indicator of the progression of the
-        pandemic, although there is generally a 17-21 day lag between infection
-        and {{ filter.label }}.
+        We can see the world map of COVID-19 {{ filter.label }}, and see each
+        country clearly
       </p>
 
       <div id="mapChart"></div>
     </div>
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Cumulative {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Reported {{ filter.label }} are the number of
-        {{ filter.label }} officially reported as due to COVID-19. Total
-        {{ filter.label }} are the estimated number of
-        {{ filter.label }} attributable to COVID-19, including unreported
-        {{ filter.label }}.
+        A bar chart race is a great way to see real-time, day-to-day data.
       </p>
 
-      <div id="chartdiv" style="width: 100%; height: 5000px;"></div>
+      <div id="chartdiv" style="width: 100%; height: 5000px"></div>
     </div>
 
     {{/filter.byCountry}}
@@ -181,9 +160,7 @@
     {{#filter.byContinent}}
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Cumulative {{ filter.label }}</h2>
 
       <hr />
 
@@ -196,69 +173,68 @@
       </p>
 
       <div class="card mx-3 bg-secondary py-3 text-light text-center fs-5 mb-3">
-        {{ total }} reported COVID-19 {{ filter.label }} by country
+        {{ total }} reported COVID-19 {{ filter.label }} by continent
       </div>
 
       <canvas id="chart7" style="width: 300px" class="mx-5"></canvas>
     </div>
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Daily {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Reported {{ filter.label }} are the number of
-        {{ filter.label }} officially reported as due to COVID-19. Total
-        {{ filter.label }} are the estimated number of
-        {{ filter.label }} attributable to COVID-19, including unreported
-        {{ filter.label }}.
+        Daily {{ filter.label }} is the best indicator of the progression of the
+        pandemic, although there is generally a 17-21 day lag between infection
+        and {{ filter.label }}.
       </p>
 
       <canvas id="chart8" style="width: 300px" class="mx-5"></canvas>
     </div>
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Reported {{ filter.label }} are the number of
-        {{ filter.label }} officially reported as due to COVID-19. Total
-        {{ filter.label }} are the estimated number of
-        {{ filter.label }} attributable to COVID-19, including unreported
-        {{ filter.label }}.
+        You can see the number of {{ filter.label }} by covid 19, through a bar
+        chart
       </p>
 
       <div class="card mx-3 bg-secondary py-3 text-light text-center fs-5 mb-3">
-        {{ totalDeaths }} reported COVID-19 {{ filter.label }} by country
+        {{ total }} reported COVID-19 {{ filter.label }} by continent
       </div>
 
       <canvas id="chart9" style="width: 300px" class="mx-5"></canvas>
     </div>
 
     <div class="card mx-3 my-3">
-      <h2 class="card-title pt-4 ps-3">
-        Cumulative {{ filter.label }} line chart
-      </h2>
+      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }}</h2>
 
       <hr />
 
       <p class="card-body">
-        Reported {{ filter.label }} are the number of
-        {{ filter.label }} officially reported as due to COVID-19. Total
-        {{ filter.label }} are the estimated number of
-        {{ filter.label }} attributable to COVID-19, including unreported
-        {{ filter.label }}.
+        You can see the number of {{ filter.label }} by covid 19, through a pie
+        chart
       </p>
 
       <canvas id="chart10" style="width: 300px" class="mx-5"></canvas>
     </div>
+
+    <div class="card mx-3 my-3">
+      <h2 class="card-title pt-4 ps-3">Total {{ filter.label }}</h2>
+
+      <hr />
+
+      <p class="card-body">
+        A bar chart race is a great way to see real-time, day-to-day data.
+      </p>
+
+      <div id="chartdiv" style="width: 100%; height: 600px"></div>
+    </div>
+
     {{/filter.byContinent}}
 
     <script src="/javascript/chart/setup.js"></script>
