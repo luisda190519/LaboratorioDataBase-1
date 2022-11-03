@@ -195,7 +195,7 @@ const startRace = async function (barData, labels) {
     
     series.events.on("inited", function() {
       setTimeout(function() {
-        playButton.isActive = true; // this starts interval
+        playButton.isActive = false; // this starts interval
       }, 2000)
     })
     

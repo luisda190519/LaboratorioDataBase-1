@@ -14,40 +14,164 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          {{#filter.global}}
-          <a class="nav-link" href="/deaths/global">Deaths</a>
-          <a class="nav-link" href="/cases/global">Cases</a>
-          <a class="nav-link" href="/vaccinations/global">Vaccination</a>
-          <a class="nav-link" href="/tests/global">Tests</a>
-          {{/filter.global}}
-
-          {{#filter.byCountry}}
-          <a class="nav-link" href="/deaths/byCountry">Deaths</a>
-          <a class="nav-link" href="/cases/byCountry">Cases</a>
-          <a class="nav-link" href="/vaccinations/byCountry">Vaccination</a>
-          <a class="nav-link" href="/tests/byCountry">Tests</a>
-          {{/filter.byCountry}}
-
-          {{#filter.byContinent}}
-          <a class="nav-link" href="/deaths/bycontinent">Deaths</a>
-          <a class="nav-link" href="/cases/byContinent">Cases</a>
-          <a class="nav-link" href="/vaccinations/byContinent">Vaccination</a>
-          <a class="nav-link" href="/tests/byContinent">Tests</a>
-          {{/filter.byContinent}}
-        </div>
-
         <div class="ms-auto">
           <div class="navbar-nav">
-            <a class="nav-link mx-2" href="/{{ filter.label }}/global"
-              >Global</a
-            >
-            <a class="nav-link mx-2" href="/{{ filter.label }}/byCountry"
-              >By country</a
-            >
-            <a class="nav-link mx-2" href="/{{ filter.label }}/byContinent"
-              >By continent</a
-            >
+            <div class="mx-1">
+              {{#filter.global}}
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ filter.label }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <p class="dropdown-item" href="/">
+                      Choose which data you want to plot:
+                    </p>
+                  </li>
+                  <div class="dropdown-divider"></div>
+                  <li>
+                    <a class="dropdown-item" href="/deaths/global">Deaths</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/cases/global">Cases</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/vaccinations/global"
+                      >Vaccination</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/tests/global">Tests</a>
+                  </li>
+                </ul>
+              </div>
+              {{/filter.global}}
+
+              {{#filter.byCountry}}
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ filter.label }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <p class="dropdown-item" href="/">
+                      Choose which data you want to plot:
+                    </p>
+                  </li>
+                  <div class="dropdown-divider"></div>
+                  <li>
+                    <a class="dropdown-item" href="/deaths/bycountry">Deaths</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/cases/bycountry">Cases</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/vaccinations/bycountry"
+                      >Vaccination</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/tests/bycountry">Tests</a>
+                  </li>
+                </ul>
+              </div>
+              {{/filter.byCountry}}
+
+              {{#filter.byContinent}}
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {{ filter.label }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <p class="dropdown-item" href="/">
+                      Choose which data you want to plot:
+                    </p>
+                  </li>
+                  <div class="dropdown-divider"></div>
+                  <li>
+                    <a class="dropdown-item" href="/deaths/bycontinent"
+                      >Deaths</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/cases/byContinent">Cases</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/vaccinations/byContinent"
+                      >Vaccination</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="/tests/byContinent">Tests</a>
+                  </li>
+                </ul>
+              </div>
+              {{/filter.byContinent}}
+            </div>
+
+            <div class="dropdown mx-2">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{#filter.global}}
+                Global
+                {{/filter.global}}
+                {{#filter.byCountry}}
+                By country
+                {{/filter.byCountry}}
+                {{#filter.byContinent}}
+                By continent
+                {{/filter.byContinent}}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <p class="dropdown-item" href="/">
+                    Choose how you want to filter it:
+                  </p>
+                </li>
+                <div class="dropdown-divider"></div>
+                <li>
+                  <a class="dropdown-item" href="/{{ filter.label }}/global"
+                    >Global</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/{{ filter.label }}/byCountry"
+                    >By country</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="/{{ filter.label }}/byContinent"
+                    >By continent</a
+                  >
+                </li>
+              </ul>
+            </div>
 
             <form
               class="d-flex"
